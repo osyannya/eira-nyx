@@ -10,3 +10,5 @@
 
   boot.resumeDevice = "/dev/disk/by-label/swap";
 }
+
+# Test

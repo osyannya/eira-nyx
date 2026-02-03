@@ -1,0 +1,7 @@
+{ config, lib, pkgs, ... }:
+
+{
+  home.sessionVariables = {
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+  };
+}

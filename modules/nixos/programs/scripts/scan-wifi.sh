@@ -25,7 +25,7 @@ detect_wifi_interface() {
 
 IFACE=$(detect_wifi_interface)
 
-sudo iw dev "$IFACE" scan | awk '
+iw dev "$IFACE" scan | awk ' # Requires sudo
 BEGIN {
     ssid = "";
     bssid = "";

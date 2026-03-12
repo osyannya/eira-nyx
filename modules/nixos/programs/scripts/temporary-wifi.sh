@@ -34,7 +34,6 @@ wpa_cli -i "$IFACE" set_network "$netid" psk "\"$PASS\""
 wpa_cli -i "$IFACE" enable_network "$netid" >/dev/null
 wpa_cli -i "$IFACE" select_network "$netid" >/dev/null
 
-echo "Connecting to $SSID..."
 for i in {1..15}; do
   sleep 1
   if wpa_cli -i "$IFACE" status | grep -q '^wpa_state=COMPLETED'; then

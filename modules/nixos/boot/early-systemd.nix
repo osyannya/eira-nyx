@@ -5,10 +5,8 @@
     DefaultTimeoutStartSec = "10s";
     DefaultTimeoutStopSec = "10s";
     DefaultRestartSec = "2s";
-    LogLevel = "warning";
+    LogLevel = "debug";
   };
 
   boot.resumeDevice = "/dev/disk/by-label/swap";
 }
-
-# Test

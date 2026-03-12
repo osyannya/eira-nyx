@@ -1,68 +1,63 @@
-{ config, lib, pkgs, inputs, ... }:
+{ ... }:
 
 let
-  nixosBoot = "${inputs.self.outPath}/modules/nixos/boot";
-  nixosCredentials = "${inputs.self.outPath}/modules/nixos/credentials";
-  nixosFeatures = "${inputs.self.outPath}/modules/nixos/features";
-  nixosPackages = "${inputs.self.outPath}/modules/nixos/packages";
-  nixosPersistence = "${inputs.self.outPath}/modules/nixos/persistence";
-  nixosPrograms = "${inputs.self.outPath}/modules/nixos/programs";
-  nixosServices = "${inputs.self.outPath}/modules/nixos/services";
-  nixosSystem = "${inputs.self.outPath}/modules/nixos/system";
+  modulesNixOS = ../../modules/nixos;
 in {
   imports = [
-    "${nixosBoot}/early-systemd.nix"
-    # "${nixosBoot}/encryption.nix"
-    # "${nixosBoot}/initrd.nix"
-    "${nixosBoot}/kernel.nix"
-    "${nixosBoot}/loader.nix"
+    # Boot
+    (modulesNixOS + /boot/early-systemd.nix)
+    # (modulesNixOS + /boot/encryption.nix)
+    # (modulesNixOS + /boot/initrd.nix)
+    (modulesNixOS + /boot/kernel.nix)
+    (modulesNixOS + /boot/loader.nix)
 
-    "${nixosCredentials}/agenix.nix"
+    # Nix
+    (modulesNixOS + /configuration/default.nix)
 
-    "${nixosFeatures}/desktop/compositor/sway.nix"
-    "${nixosFeatures}/desktop/file-manager/thunar.nix"
-    "${nixosFeatures}/desktop/themes/adwaita-dark.nix"
+    # Features
+    (modulesNixOS + /features/desktop/compositor/sway.nix)
+    (modulesNixOS + /features/desktop/file-manager/thunar.nix)
+    (modulesNixOS + /features/desktop/fonts.nix)
+    (modulesNixOS + /features/desktop/materials.nix)
+    (modulesNixOS + /features/desktop/themes/adwaita-dark.nix)
 
-    "${nixosFeatures}/fonts.nix"
+    (modulesNixOS + /features/video/nvidia.nix)
+    (modulesNixOS + /features/zram.nix)
 
-    "${nixosFeatures}/networking/firewall/nftables.nix"
-    "${nixosFeatures}/networking/interfaces.nix"
-    "${nixosFeatures}/networking/wireless/wpa-supplicant.nix"
+    # Network
+    (modulesNixOS + /network/dns.nix)
+    (modulesNixOS + /network/firewall/nftables.nix)
+    (modulesNixOS + /network/interfaces.nix)
+    (modulesNixOS + /network/wireless/wpa-supplicant.nix)
 
-    "${nixosFeatures}/video/nvidia.nix"
+    # Packages
+    (modulesNixOS + /packages/core.nix)
+    (modulesNixOS + /packages/files.nix)
+    (modulesNixOS + /packages/hacking.nix)
+    (modulesNixOS + /packages/network-tools.nix)
+    (modulesNixOS + /packages/security-tools.nix)
 
-    "${nixosFeatures}/virtualisation.nix"
-    "${nixosFeatures}/zram.nix"
+    # Programs
+    (modulesNixOS + /programs/git.nix)
+    (modulesNixOS + /programs/mtr.nix)
+    (modulesNixOS + /programs/nano.nix)
+    (modulesNixOS + /programs/neovim.nix)
+    (modulesNixOS + /programs/steam.nix)
+    (modulesNixOS + /programs/tcpdump.nix)
+    (modulesNixOS + /programs/tmux.nix)
+    (modulesNixOS + /programs/vim.nix)
+    (modulesNixOS + /programs/wireshark.nix)
 
-    "${nixosPackages}/core.nix"
-    "${nixosPackages}/files.nix"
-    "${nixosPackages}/hacking.nix"
-    "${nixosPackages}/materials.nix"
-    "${nixosPackages}/networking-tools.nix"
-    "${nixosPackages}/security-tools.nix"
+    # Services
+    (modulesNixOS + /services/audio.nix)
+    (modulesNixOS + /services/bluetooth.nix)
+    (modulesNixOS + /services/dbus.nix)
+    (modulesNixOS + /services/getty.nix)
+    (modulesNixOS + /services/logind.nix)
+    (modulesNixOS + /services/polkit.nix)
+    (modulesNixOS + /services/upower.nix)
 
-    # "${nixosPersistence}/impermanence.nix"
-
-    # "${nixosPrograms}/ghidra.nix"
-    "${nixosPrograms}/git.nix"
-    "${nixosPrograms}/mtr.nix"
-    "${nixosPrograms}/nano.nix"
-    "${nixosPrograms}/neovim.nix"
-    "${nixosPrograms}/steam.nix"
-    "${nixosPrograms}/tcpdump.nix"
-    "${nixosPrograms}/tmux.nix"
-    "${nixosPrograms}/vim.nix"
-    "${nixosPrograms}/virt-manager.nix"
-    "${nixosPrograms}/wireshark.nix"
-
-    "${nixosServices}/audio.nix"
-    "${nixosServices}/bluetooth.nix"
-    "${nixosServices}/dbus.nix"
-    "${nixosServices}/getty.nix"
-    "${nixosServices}/logind.nix"
-    "${nixosServices}/polkit.nix"
-    "${nixosServices}/upower.nix"
-
-    "${nixosSystem}/configuration.nix"
+    # Virtualisation
+    # (modulesNixOS + /virtualisation/microvms/spotify-vm.nix)
   ];
 }

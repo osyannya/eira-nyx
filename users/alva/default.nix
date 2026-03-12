@@ -1,15 +1,14 @@
-{ config, lib, pkgs, username, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   imports = [
     ./modules.nix
   ];
 
-  # programs.home-manager.enable = true;
-
+  # Identity
   home = {
-    inherit username;
-    homeDirectory = "/home/${username}";
+    username = "alva";
+    homeDirectory = "/home/alva";
     stateVersion = "25.05";
   };
 }

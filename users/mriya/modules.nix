@@ -1,55 +1,60 @@
-{ config, lib, pkgs, inputs, ... }:
+{ ... }:
 
 let
-  homeFeatures = "${inputs.self.outPath}/modules/home/features";
-  homePackages = "${inputs.self.outPath}/modules/home/packages";
-  homePrograms = "${inputs.self.outPath}/modules/home/programs";
-  homeServices = "${inputs.self.outPath}/modules/home/services";
+  modulesHome = ../../modules/home;
 in {
   imports = [
-    "${homeFeatures}/desktop/compositor/sway.nix"
-    "${homeFeatures}/desktop/cursors/bibata-modern.nix"
-    "${homeFeatures}/desktop/themes/adwaita-dark.nix"
-    "${homeFeatures}/desktop/variables.nix"
-    "${homeFeatures}/desktop/xdg.nix"
+    # Features
+    (modulesHome + /features/desktop/compositor/sway.nix)
+    (modulesHome + /features/desktop/cursors/bibata-modern.nix)
+    (modulesHome + /features/desktop/themes/adwaita-dark.nix)
+    (modulesHome + /features/desktop/variables.nix)
+    (modulesHome + /features/desktop/xdg.nix)
 
-    "${homeFeatures}/fcitx5.nix"
-    "${homeFeatures}/home-files/bash-profile.nix"
-    "${homeFeatures}/home-files/bashrc.nix"
-    "${homeFeatures}/wrappers/my-clipboard.nix"
-    "${homeFeatures}/wrappers/my-menu.nix"
-    "${homeFeatures}/wrappers/screenshot-area.nix"
-    "${homeFeatures}/wrappers/screenshot.nix"
-    "${homeFeatures}/wrappers/swaylock-wrapper.nix"
-    "${homeFeatures}/wrappers/translator.nix"
+    (modulesHome + /features/fcitx5.nix)
 
-    "${homePackages}/apps.nix"
-    "${homePackages}/utils.nix"
+    # Home files
+    (modulesHome + /home-files/bash-profile.nix)
+    (modulesHome + /home-files/bashrc.nix)
 
-    "${homePrograms}/btop.nix"
-    "${homePrograms}/cava.nix"
-    "${homePrograms}/fastfetch.nix"
-    "${homePrograms}/firefox.nix"
-    "${homePrograms}/foot.nix"
-    "${homePrograms}/git.nix"
-    "${homePrograms}/i3status-rust.nix"
-    "${homePrograms}/imv.nix"
-    "${homePrograms}/joplin-desktop.nix"
-    "${homePrograms}/keepassxc.nix"
-    "${homePrograms}/librewolf.nix"
-    "${homePrograms}/lutris.nix"
-    "${homePrograms}/mpv.nix"
-    "${homePrograms}/ncmpcpp.nix"
-    "${homePrograms}/obs-studio.nix"
-    "${homePrograms}/swaylock.nix"
-    "${homePrograms}/vscode.nix"
+    # Packages
+    (modulesHome + /packages/apps.nix)
+    (modulesHome + /packages/utils.nix)
 
-    "${homeServices}/cliphist.nix"
-    "${homeServices}/idle-inhibit.nix"
-    "${homeServices}/mako.nix"
-    "${homeServices}/mpd.nix"
-    "${homeServices}/polkit-kde.nix"
-    "${homeServices}/swayidle.nix"
-    "${homeServices}/wlsunset.nix"
+    # Programs
+    (modulesHome + /programs/btop.nix)
+    (modulesHome + /programs/cava.nix)
+    (modulesHome + /programs/fastfetch.nix)
+    (modulesHome + /programs/firefox.nix)
+    (modulesHome + /programs/foot.nix)
+    (modulesHome + /programs/git.nix)
+    (modulesHome + /programs/i3status-rust.nix)
+    (modulesHome + /programs/imv.nix)
+    (modulesHome + /programs/joplin-desktop.nix)
+    (modulesHome + /programs/keepassxc.nix)
+    (modulesHome + /programs/librewolf.nix)
+    (modulesHome + /programs/lutris.nix)
+    (modulesHome + /programs/mpv.nix)
+    (modulesHome + /programs/ncmpcpp.nix)
+    (modulesHome + /programs/obs-studio.nix)
+    (modulesHome + /programs/swaylock.nix)
+    (modulesHome + /programs/vscode.nix)
+
+    # Services
+    (modulesHome + /services/cliphist.nix)
+    (modulesHome + /services/idle-inhibit.nix)
+    (modulesHome + /services/mako.nix)
+    (modulesHome + /services/mpd.nix)
+    (modulesHome + /services/polkit-kde.nix)
+    (modulesHome + /services/swayidle.nix)
+    (modulesHome + /services/wlsunset.nix)
+
+    # Wrappers
+    (modulesHome + /wrappers/my-clipboard.nix)
+    (modulesHome + /wrappers/my-menu.nix)
+    (modulesHome + /wrappers/screenshot-area.nix)
+    (modulesHome + /wrappers/screenshot.nix)
+    (modulesHome + /wrappers/script-wrapper.nix)
+    (modulesHome + /wrappers/swaylock-wrapper.nix)
   ];
 }

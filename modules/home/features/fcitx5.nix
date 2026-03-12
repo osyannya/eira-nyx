@@ -9,7 +9,7 @@
       fcitx5-mozc 
       kdePackages.fcitx5-configtool
       fcitx5-gtk 
-      libsForQt5.fcitx5-qt 
+      kdePackages.fcitx5-qt 
     ];
   };
 }

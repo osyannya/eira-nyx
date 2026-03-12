@@ -21,7 +21,7 @@
     XDG_SESSION_DESKTOP = "sway";
     XDG_SESSION_TYPE = "wayland";
     GDK_BACKEND = "wayland";
-    QT_QPA_PLATFORMTHEME = "qt5ct";
+    # QT_QPA_PLATFORMTHEME = "qt5ct";
     QT_QPA_PLATFORM = "wayland";
   };
 }

@@ -1,85 +1,75 @@
-# Default path: /etc/nixos/configuration.nix
-# Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, username, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
-  imports =
-    [ 
-      ./hardware-configuration.nix # Include the results of the hardware scan
-      ./modules.nix
-      # ./disko.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./modules.nix
+    # ./disko.nix
+  ];
 
-  # Hostname
+  # Identity
   networking.hostName = "legion5";
-
-  # Time zone
   time.timeZone = "Europe/Kyiv";
-
-  # Locales
   i18n.defaultLocale = "en_US.UTF-8";
+  system.stateVersion = "25.05"; # Do not change
 
-  # Terminal
-  # console = {
-    # enable = true;
-    # font = "Lat2-Terminus16";
-    # keyMap = "us";
-    # useXkbConfig = true; # use xkb.options in tty.
-  # };
-
-  # Default editor
+  # Environment
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
 
-  # programs.fuse.userAllowOther = true;
-
-  users.mutableUsers = false;
+  environment.systemPackages = [
+    inputs.agenix.packages.${pkgs.system}.default
+  ];
 
   # Groups
-  users.groups.network = {}; # used in networking
+  users.groups.network = {}; # Network secrets
 
-  # User account
-  users.users.${username} = {
-    isNormalUser = true;
-    createHome = true;
-    home = "/home/${username}";
-    extraGroups = [
-      "audio"
-      "libvirtd"
-      "network"
-      # "networkmanager"
-      # "vboxusers"
-      "video" 
-      # "vmware"
-      "wheel" # allow sudo for user 
-    ]; 
+  # Users
+  users.users.root = {
+    hashedPasswordFile = config.age.secrets.rootPassword.path;
   };
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
+  users.users.alva = {
+    isNormalUser = true;
+    createHome = true;
+    home = "/home/alva";
+    extraGroups = [ "audio" "network" "video" "wheel" "kvm" ];
+    hashedPasswordFile = config.age.secrets.alvaPassword.path;
+  };
 
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
-  # to actually do that.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "25.05"; # Did you read the comment?
+  # Home-manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      alva = import ../../users/alva/default.nix;
+    };
+  };
+
+  # Secrets
+  age.identityPaths = [
+    "/etc/ssh/ssh_host_ed25519_key"
+    "/home/alva/.ssh/id_ed25519"
+  ];
+
+  age.secrets = {
+    rootPassword = {
+      file = "${inputs.self}/hosts/legion5/secrets/root-password.age";
+      owner = "root";
+      mode = "0400";
+    };
+    alvaPassword = {
+      file = "${inputs.self}/users/alva/secrets/password.age";
+      owner = "root";
+      mode = "0400";
+    };
+    networks = {
+      file = "${inputs.self}/secrets/shared/networks.age";
+      group = "network";
+      mode = "0440";
+    };
+  };
 }

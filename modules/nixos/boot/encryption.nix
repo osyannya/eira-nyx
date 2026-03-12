@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 {
-  # Inspect hardware-configuration.nix
+  # Information from hardware-configuration.nix
   boot.initrd.luks.devices = {
     luksroot = {
       device = lib.mkForce "/dev/disk/by-partlabel/cryptroot";

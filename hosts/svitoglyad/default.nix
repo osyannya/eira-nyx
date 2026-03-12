@@ -1,85 +1,90 @@
-# /etc/nixos/configuration.nix
-# Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, username, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
-  imports =
-    [ 
-      ./hardware-configuration.nix # Include the results of the hardware scan
-      ./modules.nix
-      # ./disko.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./modules.nix
+    # ./disko.nix
+  ];
 
-  # Hostname
+  # Identity
   networking.hostName = "svitoglyad";
-
-  # Time zone
   time.timeZone = "Europe/Kyiv";
-
-  # Locales
   i18n.defaultLocale = "en_US.UTF-8";
+  system.stateVersion = "25.05"; # Do not change
 
-  # Terminal
-  # console = {
-    # enable = true;
-    # font = "Lat2-Terminus16";
-    # keyMap = "us";
-    # useXkbConfig = true; # use xkb.options in tty.
-  # };
-
-  # Default editor
+  # Environment
   environment.variables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
 
-  # programs.fuse.userAllowOther = true;
+  environment.systemPackages = [
+    inputs.agenix.packages.${pkgs.system}.default
+  ];
 
-  users.mutableUsers = false;
-
-  # Groups
-  users.groups.network = {}; # used in networking
-
-  # User account
-  users.users.${username} = {
-    isNormalUser = true;
-    createHome = true;
-    home = "/home/${username}";
-    extraGroups = [
-      "audio"
-      "libvirtd"
-      "network"
-      # "networkmanager"
-      # "vboxusers"
-      "video" 
-      # "vmware"
-      "wheel" # allow sudo for user 
-    ]; 
+  environment.persistence."/persist" = {
+    enable = true;
+    directories = [
+      "/var/lib/bluetooth"
+      "/var/lib/nixos"
+      "/var/lib/systemd"
+      "/var/log"
+    ];
+    files = [
+      { file = "/etc/machine-id"; parentDirectory = { mode = "0644"; }; }
+      { file = "/etc/ssh/ssh_host_ed25519_key"; parentDirectory = { mode = "u=rw,g=,o="; }; }
+      { file = "/etc/ssh/ssh_host_ed25519_key.pub"; parentDirectory = { mode = "u=rw,g=r,o=r"; }; }
+    ];
   };
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
+  # Groups
+  users.groups.network = {}; # Network secrets
 
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
-  # to actually do that.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "25.05"; # Did you read the comment?
+  # Users
+  users.users.root = {
+    hashedPasswordFile = config.age.secrets.rootPassword.path;
+  };
+
+  users.users.mriya = {
+    isNormalUser = true;
+    createHome = true;
+    home = "/home/mriya";
+    extraGroups = [ "audio" "network" "video" "wheel" "kvm" ];
+    hashedPasswordFile = config.age.secrets.mriyaPassword.path;
+  };
+
+  # Home-manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      mriya = import ../../users/mriya/default.nix;
+    };
+  };
+
+  # Secrets
+  age.identityPaths = [
+    "/persist/etc/ssh/ssh_host_ed25519_key"
+    "/persist/home/mriya/.ssh/id_ed25519"
+  ];
+
+  age.secrets = {
+    rootPassword = {
+      file = "${inputs.self}/hosts/svitoglyad/secrets/root-password.age";
+      owner = "root";
+      mode = "0400";
+    };
+    mriyaPassword = {
+      file = "${inputs.self}/users/mriya/secrets/password.age";
+      owner = "root";
+      mode = "0400";
+    };
+    networks = {
+      file = "${inputs.self}/secrets/shared/networks.age";
+      group = "network";
+      mode = "0440";
+    };
+  };
 }

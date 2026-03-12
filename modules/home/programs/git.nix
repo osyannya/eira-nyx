@@ -1,8 +1,12 @@
-{ config, lib, pkgs, username, ... }:
+{ config, lib, pkgs, ... }:
 
+let
+  username = config.home.username;
+in
 {
   programs.git = {
     enable = true;
+
     settings = {
       user = {
         name = username;
@@ -11,3 +15,4 @@
     };
   };
 }
+

@@ -9,37 +9,37 @@
         content = {
           type = "gpt";
           partitions = {
-            boot = {
-              size = "512MiB";
+            ESP = {
+              name = "boot";
+              size = "1G";
               type = "EF00";
+              priority = 1;
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "defaults" "umask=0077" ];
+                mountOptions = [ "umask=0077" ];
               };
             };
-            root = {
-              end = "-16GiB";
-              label = "cryptroot";
+            luks = {
+              name = "root";
+              size = "100%";
               content = {
                 type = "luks";
-                name = "luksroot";
+                name = "crypted";
                 settings = {
                   allowDiscards = true;
                   bypassWorkqueues = true;
                 };
-                # TPM2 unlock configuration
                 extraFormatArgs = [
                   "--type luks2"
                   "--cipher aes-xts-plain64"
                   "--key-size 512"
                   "--hash sha256"
                 ];
-                extraOpenArgs = [ ];
                 content = {
                   type = "btrfs";
-                  extraArgs = [ "-f" "-L nixos" ];
+                  extraArgs = [ "-f" ];
                   subvolumes = {
                     "@" = {
                       mountpoint = "/";
@@ -53,31 +53,12 @@
                       mountpoint = "/persist";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
+                    "@swap" = {
+                      mountpoint = "/.swap";
+                      mountOptions = [ "noatime" "nodatacow" ];
+                      swap.swapfile.size = "16G";
+                    };
                   };
-                };
-              };
-            };
-            swap = {
-              size = "16GiB";
-              label = "cryptswap";
-              content = {
-                type = "luks";
-                name = "luksswap";
-                settings = {
-                  allowDiscards = true;
-                  bypassWorkqueues = true;
-                };
-                extraFormatArgs = [
-                  "--type luks2"
-                  "--cipher aes-xts-plain64"
-                  "--key-size 512"
-                  "--hash sha256"
-                ];
-                content = {
-                  type = "swap";
-                  randomEncryption = false;
-                  discardPolicy = "both";
-                  extraArgs = [ "-L swap" ];
                 };
               };
             };
@@ -87,5 +68,3 @@
     };
   };
 }
-
-

@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
     aircrack-ng
-    bettercap
+    # bettercap
     hashcat
     hcxdumptool
     hcxtools

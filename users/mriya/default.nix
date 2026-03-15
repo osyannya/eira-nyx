@@ -36,8 +36,8 @@
         ".steam"
     ];
     files = [
-      { file = ".ssh/id_ed25519"; parentDirectory = { mode = "u=rw,g=,o="; }; }
-      { file = ".ssh/id_ed25519.pub"; parentDirectory = { mode = "u=rw,g=r,o=r"; }; }
+      { file = ".ssh/id_ed25519"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
+      { file = ".ssh/id_ed25519.pub"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
     ];
   };
 }

@@ -34,8 +34,8 @@
     ];
     files = [
       { file = "/etc/machine-id"; parentDirectory = { mode = "0644"; }; }
-      { file = "/etc/ssh/ssh_host_ed25519_key"; parentDirectory = { mode = "u=rw,g=,o="; }; }
-      { file = "/etc/ssh/ssh_host_ed25519_key.pub"; parentDirectory = { mode = "u=rw,g=r,o=r"; }; }
+      { file = "/etc/ssh/ssh_host_ed25519_key"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
+      { file = "/etc/ssh/ssh_host_ed25519_key.pub"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
     ];
   };
 
@@ -68,7 +68,7 @@
   # Secrets
   age.identityPaths = [
     "/persist/etc/ssh/ssh_host_ed25519_key"
-    "/persist/home/mriya/.ssh/id_ed25519"
+    # "/persist/home/mriya/.ssh/id_ed25519" # temporary measure
   ];
 
   age.secrets = {
@@ -82,10 +82,10 @@
       owner = "root";
       mode = "0400";
     };
-    networks = {
-      file = "${inputs.self}/secrets/shared/networks.age";
-      group = "network";
-      mode = "0440";
-    };
+    # networks = {
+      # file = "${inputs.self}/secrets/shared/networks.age";
+      # group = "network";
+      # mode = "0440";
+    # };
   };
 }

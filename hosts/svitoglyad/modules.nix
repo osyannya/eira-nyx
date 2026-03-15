@@ -18,9 +18,10 @@ in {
     (modulesNixOS + /desktop/file-manager/thunar.nix)
     (modulesNixOS + /desktop/fonts.nix)
     (modulesNixOS + /desktop/materials.nix)
-    (modulesNixOS + /features/desktop/themes/adwaita-dark.nix)
+    (modulesNixOS + /desktop/themes/adwaita-dark.nix)
 
     # Features
+    (modulesNixOS + /features/apparmor.nix)
     (modulesNixOS + /features/default.nix)
     (modulesNixOS + /features/zram.nix)
 

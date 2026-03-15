@@ -33,7 +33,6 @@
       ".local/state"
       ".mozilla"
         ".pki"
-        ".ssh"
         ".steam"
     ];
     files = [

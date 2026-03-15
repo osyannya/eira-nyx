@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
+    ./hardware-configuration.nix # Update
     ./modules.nix
-    # ./disko.nix
+    ./disko.nix
   ];
 
   # Identity
@@ -28,6 +28,7 @@
     directories = [
       "/var/lib/bluetooth"
       "/var/lib/nixos"
+      "/var/lib/sbctl"
       "/var/lib/systemd"
       "/var/log"
     ];

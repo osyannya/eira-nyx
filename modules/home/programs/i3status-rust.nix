@@ -58,7 +58,7 @@
           block = "backlight";
         }
         {
-          block = "keyboard_layout"; # errors while using fcitx5
+          block = "keyboard_layout";
           driver = "sway";
           format = " $layout ";
           mappings = {

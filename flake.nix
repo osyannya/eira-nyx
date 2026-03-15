@@ -17,6 +17,10 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     microvm = {
       url = "github:microvm-nix/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +37,7 @@
             inputs.disko.nixosModules.disko
             inputs.impermanence.nixosModules.impermanence
             inputs.agenix.nixosModules.default
+            lanzaboote.nixosModules.lanzaboote
             inputs.microvm.nixosModules.host
             home-manager.nixosModules.home-manager
             hostPath

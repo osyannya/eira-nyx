@@ -7,21 +7,21 @@ in {
     # Boot
     (modulesNixOS + /boot/early-systemd.nix)
     (modulesNixOS + /boot/encryption.nix)
-    (modulesNixOS + /boot/initrd.nix)
+    (modulesNixOS + /boot/initrd/ephemeral-root.nix)
+    (modulesNixOS + /boot/initrd/persist-verification.nix)
     (modulesNixOS + /boot/kernel.nix)
+    (modulesNixOS + /boot/lanzaboote.nix)
     (modulesNixOS + /boot/loader.nix)
 
-    # Nix
-    (modulesNixOS + /configuration/default.nix)
-
-    # Features
-    (modulesNixOS + /features/desktop/compositor/sway.nix)
-    (modulesNixOS + /features/desktop/file-manager/thunar.nix)
-    (modulesNixOS + /features/desktop/fonts.nix)
-    (modulesNixOS + /features/desktop/materials.nix)
+    # Desktop
+    (modulesNixOS + /desktop/compositor/sway.nix)
+    (modulesNixOS + /desktop/file-manager/thunar.nix)
+    (modulesNixOS + /desktop/fonts.nix)
+    (modulesNixOS + /desktop/materials.nix)
     (modulesNixOS + /features/desktop/themes/adwaita-dark.nix)
 
-    (modulesNixOS + /features/video/intel.nix)
+    # Features
+    (modulesNixOS + /features/default.nix)
     (modulesNixOS + /features/zram.nix)
 
     # Network
@@ -55,7 +55,12 @@ in {
     (modulesNixOS + /services/getty.nix)
     (modulesNixOS + /services/logind.nix)
     (modulesNixOS + /services/polkit.nix)
+    (modulesNixOS + /services/snapshots.nix)
     (modulesNixOS + /services/upower.nix)
+
+    # Video
+    (modulesNixOS + /video/intel.nix)
+    # (modulesNixOS + /video/nvidia.nix)
 
     # Virtualisation
     # (modulesNixOS + /virtualisation/microvms/spotify-vm.nix)

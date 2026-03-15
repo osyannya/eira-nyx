@@ -4,18 +4,19 @@ let
   modulesHome = ../../modules/home;
 in {
   imports = [
-    # Features
-    (modulesHome + /features/desktop/compositor/sway.nix)
-    (modulesHome + /features/desktop/cursors/bibata-modern.nix)
-    (modulesHome + /features/desktop/themes/adwaita-dark.nix)
-    (modulesHome + /features/desktop/variables.nix)
-    (modulesHome + /features/desktop/xdg.nix)
+    # Desktop
+    (modulesHome + /desktop/compositor/sway.nix)
+    (modulesHome + /desktop/cursors/bibata-modern.nix)
+    (modulesHome + /desktop/themes/adwaita-dark.nix)
+    (modulesHome + /desktop/variables.nix)
+    (modulesHome + /desktop/xdg.nix)
 
+    # Features
     (modulesHome + /features/fcitx5.nix)
 
-    # Home files
-    (modulesHome + /home-files/bash-profile.nix)
-    (modulesHome + /home-files/bashrc.nix)
+    # Files
+    (modulesHome + /files/bash-profile.nix)
+    (modulesHome + /files/bashrc.nix)
 
     # Packages
     (modulesHome + /packages/apps.nix)

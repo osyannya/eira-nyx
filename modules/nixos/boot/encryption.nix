@@ -3,21 +3,11 @@
 {
   # Information from hardware-configuration.nix
   boot.initrd.luks.devices = {
-    luksroot = {
-      device = lib.mkForce "/dev/disk/by-partlabel/cryptroot";
+    crypted = {
+      device = lib.mkForce "/dev/disk/by-partlabel/root";
       allowDiscards = true;
 
       # TPM auto-unlock
-      crypttabExtraOpts = [
-        "tpm2-device=auto"
-        "tpm2-pcrs=7"
-      ];
-    };
-
-    luksswap = {
-      device = lib.mkForce "/dev/disk/by-partlabel/cryptswap";
-      allowDiscards = true;
-
       crypttabExtraOpts = [
         "tpm2-device=auto"
         "tpm2-pcrs=7"

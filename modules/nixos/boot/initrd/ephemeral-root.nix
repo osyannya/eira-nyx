@@ -2,7 +2,7 @@
 
 let
   # The raw Btrfs device
-  rootDevice = "/dev/disk/by-label/nixos";
+  rootDevice = "/dev/mapper/crypted";
 in {
   boot.initrd.systemd.enable = true;
 
@@ -26,25 +26,41 @@ in {
     neededForBoot = true;
   };
 
+  fileSystems."/.swap" = lib.mkForce {
+    device = rootDevice;
+    fsType = "btrfs";
+    options = [ "subvol=@swap" ];
+    neededForBoot = true;
+  };
+
   # Ephemeral root script
-  boot.initrd.systemd.services.rollback-root = {
+  boot.initrd.systemd.services.ephemeral-root = {
     description = "Rollback btrfs root subvolume";
     wantedBy = ["initrd.target"];
 
-    after = ["systemd-cryptsetup@luksroot.service"];
+    after = ["systemd-cryptsetup@crypted.service"];
     before = ["sysroot.mount"];
 
     unitConfig.DefaultDependencies = "no";
     serviceConfig.Type = "oneshot";
+    RemainAfterExit = true;
 
     script = ''
+      cleanup() {
+        if mountpoint -q /btrfs_tmp; then
+          umount /btrfs_tmp || true
+        fi
+        rmdir /btrfs_tmp 2>/dev/null || true
+      }
+      trap cleanup EXIT
+
       mkdir -p /btrfs_tmp
       mount -o subvol=/ ${rootDevice} /btrfs_tmp
 
       if [[ -e /btrfs_tmp/@ ]]; then
-        for subvol in $(btrfs subvolume list -o /btrfs_tmp/@ | cut -f9- -d' ' | tac); do
+        while IFS= read -r subvol; do
           btrfs subvolume delete "/btrfs_tmp/$subvol"
-        done
+        done < <(btrfs subvolume list -o /btrfs_tmp/@ | awk '{sub(/.*path /,""); print}' | sort -r)
 
         btrfs subvolume delete /btrfs_tmp/@
       fi

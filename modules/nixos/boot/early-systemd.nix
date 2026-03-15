@@ -8,5 +8,5 @@
     LogLevel = "debug";
   };
 
-  boot.resumeDevice = "/dev/disk/by-label/swap";
+  boot.resumeDevice = "/dev/mapper/crypted";
 }

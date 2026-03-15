@@ -13,7 +13,6 @@
     kdePackages.qt6ct
     slurp
     swaybg
-    # wlsunset # available as a service (does not work after resume nvidia)
     wmenu
   ];
 }

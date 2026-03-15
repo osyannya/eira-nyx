@@ -4,18 +4,19 @@ let
   modulesHome = ../../modules/home;
 in {
   imports = [
-    # Features
-    (modulesHome + /features/desktop/compositor/sway.nix)
-    (modulesHome + /features/desktop/cursors/bibata-modern.nix)
-    (modulesHome + /features/desktop/themes/adwaita-dark.nix)
-    (modulesHome + /features/desktop/variables.nix)
-    (modulesHome + /features/desktop/xdg.nix)
+    # Desktop
+    (modulesHome + /desktop/compositor/sway.nix)
+    (modulesHome + /desktop/cursors/bibata-modern.nix)
+    (modulesHome + /desktop/themes/adwaita-dark.nix)
+    (modulesHome + /desktop/variables.nix)
+    (modulesHome + /desktop/xdg.nix)
 
+    # Features
     (modulesHome + /features/fcitx5.nix)
 
-    # Home files
-    (modulesHome + /home-files/bash-profile.nix)
-    (modulesHome + /home-files/bashrc.nix)
+    # Files
+    (modulesHome + /files/bash-profile.nix)
+    (modulesHome + /files/bashrc.nix)
 
     # Packages
     (modulesHome + /packages/apps.nix)
@@ -50,11 +51,15 @@ in {
     (modulesHome + /services/wlsunset.nix)
 
     # Wrappers
+    (modulesHome + /wrappers/connect-wifi.nix)
+    (modulesHome + /wrappers/disconnect-wifi.nix)
     (modulesHome + /wrappers/my-clipboard.nix)
     (modulesHome + /wrappers/my-menu.nix)
+    (modulesHome + /wrappers/scan-wifi.nix)
     (modulesHome + /wrappers/screenshot-area.nix)
     (modulesHome + /wrappers/screenshot.nix)
-    (modulesHome + /wrappers/script-wrapper.nix)
     (modulesHome + /wrappers/swaylock-wrapper.nix)
+    (modulesHome + /wrappers/temporary-wifi.nix)
+    (modulesHome + /wrappers/wallpaper-switch.nix)
   ];
 }

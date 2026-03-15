@@ -37,7 +37,7 @@
             inputs.disko.nixosModules.disko
             inputs.impermanence.nixosModules.impermanence
             inputs.agenix.nixosModules.default
-            lanzaboote.nixosModules.lanzaboote
+            inputs.lanzaboote.nixosModules.lanzaboote
             inputs.microvm.nixosModules.host
             home-manager.nixosModules.home-manager
             hostPath

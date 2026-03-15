@@ -4,7 +4,7 @@
   # Information from hardware-configuration.nix
   boot.initrd.luks.devices = {
     crypted = {
-      device = lib.mkForce "/dev/disk/by-partlabel/root";
+      # device = lib.mkForce "/dev/disk/by-partlabel/root";
       allowDiscards = true;
 
       # TPM auto-unlock

@@ -42,8 +42,10 @@ in {
     before = ["sysroot.mount"];
 
     unitConfig.DefaultDependencies = "no";
-    serviceConfig.Type = "oneshot";
-    RemainAfterExit = true;
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
 
     script = ''
       cleanup() {

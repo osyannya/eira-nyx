@@ -26,11 +26,40 @@
 
       "JoplinBackup"
 
-      ".config"
+      ".config/BraveSoftware"
+      ".config/fcitx"
+      ".config/fcitx5"
+      ".config/GIMP"
+      ".config/Joplin" # Chromium cache
+      ".config/joplin-desktop" # Actual application
+      ".config/keepassxc"
+      ".config/libreoffice"
+      ".config/mozc"
+      ".config/obs-studio"
+      ".config/qalculate"
+      ".config/qBittorrent"
+      ".config/Signal"
+      ".config/spotify"
+      ".config/VSCodium"
+      ".config/wireshark"
+
       ".librewolf"
-      ".local/share"
-      { directory = ".local/share/keyrings"; mode = "0700"; }
-      ".local/state"
+
+      ".local/share/lutris"
+      ".local/share/mpd"
+      ".local/share/nvim"
+      ".local/share/org.localsend.localsend_app"
+      ".local/share/PrismLauncher"
+      ".local/share/qalculate"
+      ".local/share/qBittorrent"
+      ".local/share/Steam"
+      ".local/share/Terraria"
+
+      # { directory = ".local/share/keyrings"; mode = "0700"; }
+
+      ".local/state/nvim"
+      ".local/state/wireplumber"
+
       ".mozilla"
         ".pki"
         ".steam"

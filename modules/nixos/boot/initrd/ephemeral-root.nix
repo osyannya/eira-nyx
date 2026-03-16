@@ -44,30 +44,25 @@ in {
       Type = "oneshot";
       RemainAfterExit = true;
     };
-    path = [ pkgs.btrfs-progs pkgs.util-linux pkgs.gawk ];
 
     script = ''
       cleanup() {
-        if mountpoint -q /btrfs_tmp; then
-          umount /btrfs_tmp || true
+        if ${pkgs.util-linux}/bin/mountpoint -q /btrfs_tmp; then
+          ${pkgs.util-linux}/bin/umount /btrfs_tmp || true
         fi
-        rmdir /btrfs_tmp 2>/dev/null || true
+       ${pkgs.coreutils}/bin/rmdir /btrfs_tmp 2>/dev/null || true
       }
       trap cleanup EXIT
-
-      mkdir -p /btrfs_tmp
-      mount -o subvol=/ ${rootDevice} /btrfs_tmp
-
+      ${pkgs.coreutils}/bin/mkdir -p /btrfs_tmp
+      ${pkgs.util-linux}/bin/mount -o subvol=/ ${rootDevice} /btrfs_tmp
       if [[ -e /btrfs_tmp/@ ]]; then
         while IFS= read -r subvol; do
-          btrfs subvolume delete "/btrfs_tmp/$subvol"
-        done < <(btrfs subvolume list -o /btrfs_tmp/@ | awk '{sub(/.*path /,""); print}' | sort -r)
-
-        btrfs subvolume delete /btrfs_tmp/@
+          ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "/btrfs_tmp/$subvol"
+        done < <(${pkgs.btrfs-progs}/bin/btrfs subvolume list -o /btrfs_tmp/@ | ${pkgs.gawk}/bin/awk '{sub(/.*path /,""); print}' | ${pkgs.coreutils}/bin/sort -r)
+        ${pkgs.btrfs-progs}/bin/btrfs subvolume delete /btrfs_tmp/@
       fi
-
-      btrfs subvolume create /btrfs_tmp/@
-      umount /btrfs_tmp
+      ${pkgs.btrfs-progs}/bin/btrfs subvolume create /btrfs_tmp/@
+      ${pkgs.util-linux}/bin/umount /btrfs_tmp
     '';
   };
 }

@@ -43,6 +43,7 @@
   users.groups.network = {}; # Network secrets
 
   # Users
+  users.mutableUsers = false;
   users.users.root = {
     hashedPasswordFile = config.age.secrets.rootPassword.path;
   };
@@ -68,7 +69,7 @@
   # Secrets
   age.identityPaths = [
     "/persist/etc/ssh/ssh_host_ed25519_key"
-    # "/persist/home/mriya/.ssh/id_ed25519" # temporary measure
+    "/persist/home/mriya/.ssh/id_ed25519"
   ];
 
   age.secrets = {
@@ -82,10 +83,10 @@
       owner = "root";
       mode = "0400";
     };
-    # networks = {
-      # file = "${inputs.self}/secrets/shared/networks.age";
-      # group = "network";
-      # mode = "0440";
-    # };
+    networks = {
+      file = "${inputs.self}/secrets/shared/networks.age";
+      group = "network";
+      mode = "0440";
+    };
   };
 }

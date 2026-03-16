@@ -1,37 +1,9 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  # The raw Btrfs device
   rootDevice = "/dev/mapper/crypted";
 in {
   boot.initrd.systemd.enable = true;
-
-  # Override the auto-generated mounts with label-based ones
-  fileSystems."/" = lib.mkForce {
-    device = rootDevice;
-    fsType = "btrfs";
-    options = [ "subvol=@" ];
-  };
-
-  fileSystems."/nix" = lib.mkForce {
-    device = rootDevice;
-    fsType = "btrfs";
-    options = [ "subvol=@nix" ];
-  };
-
-  fileSystems."/persist" = lib.mkForce {
-    device = rootDevice;
-    fsType = "btrfs";
-    options = [ "subvol=@persist" ];
-    neededForBoot = true;
-  };
-
-  fileSystems."/.swap" = lib.mkForce {
-    device = rootDevice;
-    fsType = "btrfs";
-    options = [ "subvol=@swap" ];
-    neededForBoot = true;
-  };
 
   # Ephemeral root script
   boot.initrd.systemd.services.ephemeral-root = {
@@ -46,6 +18,7 @@ in {
       Type = "oneshot";
       RemainAfterExit = true;
     };
+    path = [ pkgs.btrfs-progs pkgs.util-linux pkgs.gawk ];
 
     script = ''
       cleanup() {

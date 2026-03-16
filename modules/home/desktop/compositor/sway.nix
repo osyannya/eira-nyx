@@ -119,7 +119,7 @@
         { command = "wl-paste --type text --watch cliphist store"; } 
         { command = "wl-paste --type image --watch cliphist store"; }
         { command = "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME"; }
-        { command = "wallpaper random"; }
+        { command = "wallpaper-switch random"; }
       ];
 
       gaps.inner = 10;

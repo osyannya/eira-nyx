@@ -55,8 +55,8 @@ in {
     (modulesNixOS + /services/dbus.nix)
     (modulesNixOS + /services/getty.nix)
     (modulesNixOS + /services/logind.nix)
+    (modulesNixOS + /services/persist-snapshots.nix)
     (modulesNixOS + /services/polkit.nix)
-    (modulesNixOS + /services/snapshots.nix)
     (modulesNixOS + /services/upower.nix)
 
     # Video

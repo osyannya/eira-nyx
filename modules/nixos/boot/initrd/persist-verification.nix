@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.initrd.systemd.services.verify-persist = {
+  boot.initrd.systemd.services.persist-verification = {
     description = "Verify and auto-restore BTRFS @persist subvolume";
     wantedBy = [ "initrd.target" ];
     after = [ "systemd-cryptsetup@crypted.service" "ephemeral-root.service" ];
@@ -11,7 +11,7 @@
       Type = "oneshot";
       RemainAfterExit = true;
     };
-    path = [ pkgs.btrfs-progs pkgs.coreutils pkgs.openssh pkgs.file ];
+    path = [ pkgs.btrfs-progs pkgs.coreutils pkgs.openssh pkgs.file pkgs.util-linux ];
 
     script = ''
       set -e

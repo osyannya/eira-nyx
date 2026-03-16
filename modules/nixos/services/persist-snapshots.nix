@@ -4,7 +4,7 @@ let
   rootDevice = "/dev/mapper/crypted";
   maxSnapshots = 8;
 in {
-  systemd.services.persist-snapshot-vault = {
+  systemd.services.persist-snapshots = {
     description = "Capture pristine @persist state before user login";
 
     wantedBy = [ "multi-user.target" ];
@@ -15,10 +15,8 @@ in {
       Type = "oneshot";
       FailureAction = "none";
       RemainAfterExit = true;
-      RequiresMountsFor = "/run";
     };
-
-    path = [ pkgs.btrfs-progs pkgs.coreutils pkgs.findutils ];
+    path = [ pkgs.btrfs-progs pkgs.coreutils pkgs.findutils pkgs.util-linux ];
 
     script = ''
       set -e

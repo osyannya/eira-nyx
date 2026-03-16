@@ -21,45 +21,13 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-            luks = {
+            root = {
               name = "root";
               size = "100%";
               content = {
-                type = "luks";
-                name = "crypted";
-                settings = {
-                  allowDiscards = true;
-                  bypassWorkqueues = true;
-                };
-                extraFormatArgs = [
-                  "--type luks2"
-                  "--cipher aes-xts-plain64"
-                  "--key-size 512"
-                  "--hash sha256"
-                ];
-                content = {
-                  type = "btrfs";
-                  extraArgs = [ "-f" ];
-                  subvolumes = {
-                    "@" = {
-                      mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "@nix" = {
-                      mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "@persist" = {
-                      mountpoint = "/persist";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "@swap" = {
-                      mountpoint = "/.swap";
-                      mountOptions = [ "noatime" "nodatacow" ];
-                      swap.swapfile.size = "2G";
-                    };
-                  };
-                };
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
               };
             };
           };
@@ -67,4 +35,12 @@
       };
     };
   };
+
+  # Swapfile configuration
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 2048; # Size in Megabytes
+    }
+  ];
 }

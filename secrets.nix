@@ -14,9 +14,10 @@ in
   "users/alva/secrets/password.age".publicKeys = [ legion5 alva ];
   "users/mriya/secrets/password.age".publicKeys = [ svitoglyad ]; # temporaly removed mriya
 
-  "shared/networks.age".publicKeys = [ alva ]; # same
+  "secrets/shared/networks.age".publicKeys = [ alva ]; # same
 }
 
-# Generate keys
-# sudo ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" - host's ssh key pair
-# ssh-keygen -t ed25519 - user's ssh key pair
+# Generate host ssh key pair
+# sudo ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
+# Generate user ssh key pair (no passphrase)
+# ssh-keygen -t ed25519

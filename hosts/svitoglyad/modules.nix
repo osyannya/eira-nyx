@@ -6,7 +6,6 @@ in {
   imports = [
     # Boot
     (modulesNixOS + /boot/early-systemd.nix)
-    # (modulesNixOS + /boot/encryption.nix)
     (modulesNixOS + /boot/initrd/ephemeral-root.nix)
     (modulesNixOS + /boot/initrd/persist-verification.nix)
     (modulesNixOS + /boot/kernel.nix)
@@ -40,6 +39,7 @@ in {
 
     # Programs
     (modulesNixOS + /programs/git.nix)
+    (modulesNixOS + /programs/localsend.nix)
     (modulesNixOS + /programs/mtr.nix)
     (modulesNixOS + /programs/nano.nix)
     (modulesNixOS + /programs/neovim.nix)

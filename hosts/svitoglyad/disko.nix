@@ -30,6 +30,10 @@
                 settings = {
                   allowDiscards = true;
                   bypassWorkqueues = true;
+                  crypttabExtraOpts = [
+                    "tpm2-device=auto"
+                    "tpm2-pcrs=7"
+                  ];
                 };
                 extraFormatArgs = [
                   "--type luks2"
@@ -39,7 +43,7 @@
                 ];
                 content = {
                   type = "btrfs";
-                  extraArgs = [ "-f" ];
+                  extraArgs = [ "-f" "-L pool" ];
                   subvolumes = {
                     "@" = {
                       mountpoint = "/";

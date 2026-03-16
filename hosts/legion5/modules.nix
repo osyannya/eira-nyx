@@ -6,10 +6,10 @@ in {
   imports = [
     # Boot
     (modulesNixOS + /boot/early-systemd.nix)
-    # (modulesNixOS + /boot/encryption.nix)
     # (modulesNixOS + /boot/initrd/ephemeral-root.nix)
     # (modulesNixOS + /boot/initrd/persist-verification.nix)
     (modulesNixOS + /boot/kernel.nix)
+    # (modulesNixOS + /boot/lanzaboote.nix) # temporaly disabled
     (modulesNixOS + /boot/loader.nix)
 
     # Desktop
@@ -20,6 +20,7 @@ in {
     (modulesNixOS + /desktop/themes/adwaita-dark.nix)
 
     # Features
+    (modulesNixOS + /features/apparmor.nix)
     (modulesNixOS + /features/default.nix)
     (modulesNixOS + /features/zram.nix)
 
@@ -38,6 +39,7 @@ in {
 
     # Programs
     (modulesNixOS + /programs/git.nix)
+    (modulesNixOS + /programs/localsend.nix)
     (modulesNixOS + /programs/mtr.nix)
     (modulesNixOS + /programs/nano.nix)
     (modulesNixOS + /programs/neovim.nix)

@@ -51,11 +51,15 @@ in {
     (modulesHome + /services/wlsunset.nix)
 
     # Wrappers
+    (modulesHome + /wrappers/connect-wifi.nix)
+    (modulesHome + /wrappers/disconnect-wifi.nix)
     (modulesHome + /wrappers/my-clipboard.nix)
     (modulesHome + /wrappers/my-menu.nix)
+    (modulesHome + /wrappers/scan-wifi.nix)
     (modulesHome + /wrappers/screenshot-area.nix)
     (modulesHome + /wrappers/screenshot.nix)
-    (modulesHome + /wrappers/script-wrapper.nix)
     (modulesHome + /wrappers/swaylock-wrapper.nix)
+    (modulesHome + /wrappers/temporary-wifi.nix)
+    (modulesHome + /wrappers/wallpaper-switch.nix)
   ];
 }

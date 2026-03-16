@@ -3,6 +3,7 @@
 {
   disko.devices = {
     disk = {
+      # First drive ssd
       main = {
         type = "disk";
         device = "/dev/nvme0n1";
@@ -26,10 +27,14 @@
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted";
+                name = "crypted"; # Maps to /dev/mapper/crypted
                 settings = {
                   allowDiscards = true;
                   bypassWorkqueues = true;
+                  crypttabExtraOpts = [
+                    "tpm2-device=auto"
+                    "tpm2-pcrs=7"
+                  ];
                 };
                 extraFormatArgs = [
                   "--type luks2"
@@ -39,7 +44,7 @@
                 ];
                 content = {
                   type = "btrfs";
-                  extraArgs = [ "-f" ];
+                  extraArgs = [ "-f" "-L pool" ];
                   subvolumes = {
                     "@" = {
                       mountpoint = "/";
@@ -59,6 +64,44 @@
                       swap.swapfile.size = "16G";
                     };
                   };
+                };
+              };
+            };
+          };
+        };
+      };
+
+      # Second drive hdd
+      storage = {
+        type = "disk";
+        device = "/dev/sda";
+        content = {
+          type = "gpt";
+          partitions = {
+            luks = {
+              name = "storage";
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "crypted-storage"; # Must be unique
+                settings = {
+                  allowDiscards = true;
+                  bypassWorkqueues = true;
+                  crypttabExtraOpts = [
+                    "tpm2-device=auto"
+                    "tpm2-pcrs=7"
+                  ];
+                };
+                extraFormatArgs = [
+                  "--type luks2"
+                  "--cipher aes-xts-plain64"
+                  "--key-size 512"
+                  "--hash sha256"
+                ];
+                content = {
+                  type = "filesystem";
+                  format = "ext4";
+                  mountpoint = "/storage";
                 };
               };
             };

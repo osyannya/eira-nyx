@@ -5,6 +5,32 @@ let
 in {
   boot.initrd.systemd.enable = true;
 
+    # Override the auto-generated mounts with label-based ones
+  fileSystems."/" = lib.mkForce {
+    device = rootDevice;
+    fsType = "btrfs";
+    options = [ "subvol=@" ];
+  };
+
+  fileSystems."/nix" = lib.mkForce {
+    device = rootDevice;
+    fsType = "btrfs";
+    options = [ "subvol=@nix" ];
+  };
+
+  fileSystems."/persist" = lib.mkForce {
+    device = rootDevice;
+    fsType = "btrfs";
+    options = [ "subvol=@persist" ];
+    neededForBoot = true;
+  };
+
+  fileSystems."/.swap" = lib.mkForce {
+    device = rootDevice;
+    fsType = "btrfs";
+    options = [ "subvol=@swap" ];
+  };
+
   # Ephemeral root script
   boot.initrd.systemd.services.ephemeral-root = {
     description = "Rollback btrfs root subvolume";

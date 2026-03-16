@@ -1,11 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   rootDevice = "/dev/mapper/crypted";
 in {
   boot.initrd.systemd.enable = true;
 
-    # Override the auto-generated mounts with label-based ones
+  # Override the auto-generated mounts with label-based ones
   fileSystems."/" = lib.mkForce {
     device = rootDevice;
     fsType = "btrfs";
@@ -33,36 +33,29 @@ in {
 
   # Ephemeral root script
   boot.initrd.systemd.services.ephemeral-root = {
-    description = "Rollback btrfs root subvolume";
+    description = "Refresh btrfs root subvolume";
     wantedBy = ["initrd.target"];
 
     after = ["systemd-cryptsetup@crypted.service"];
     before = ["sysroot.mount"];
 
     unitConfig.DefaultDependencies = "no";
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
+    serviceConfig.Type = "oneshot";
 
     script = ''
-      cleanup() {
-        if ${pkgs.util-linux}/bin/mountpoint -q /btrfs_tmp; then
-          ${pkgs.util-linux}/bin/umount /btrfs_tmp || true
-        fi
-       ${pkgs.coreutils}/bin/rmdir /btrfs_tmp 2>/dev/null || true
-      }
-      trap cleanup EXIT
-      ${pkgs.coreutils}/bin/mkdir -p /btrfs_tmp
-      ${pkgs.util-linux}/bin/mount -o subvol=/ ${rootDevice} /btrfs_tmp
+      mkdir -p /btrfs_tmp
+      mount -o subvol=/ ${rootDevice} /btrfs_tmp
+
       if [[ -e /btrfs_tmp/@ ]]; then
-        while IFS= read -r subvol; do
-          ${pkgs.btrfs-progs}/bin/btrfs subvolume delete "/btrfs_tmp/$subvol"
-        done < <(${pkgs.btrfs-progs}/bin/btrfs subvolume list -o /btrfs_tmp/@ | ${pkgs.gawk}/bin/awk '{sub(/.*path /,""); print}' | ${pkgs.coreutils}/bin/sort -r)
-        ${pkgs.btrfs-progs}/bin/btrfs subvolume delete /btrfs_tmp/@
+        for subvol in $(btrfs subvolume list -o /btrfs_tmp/@ | cut -f9- -d' ' | tac); do
+          btrfs subvolume delete "/btrfs_tmp/$subvol"
+        done
+
+        btrfs subvolume delete /btrfs_tmp/@
       fi
-      ${pkgs.btrfs-progs}/bin/btrfs subvolume create /btrfs_tmp/@
-      ${pkgs.util-linux}/bin/umount /btrfs_tmp
+
+      btrfs subvolume create /btrfs_tmp/@
+      umount /btrfs_tmp
     '';
   };
 }

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hardware-configuration.nix # Update
+    ./hardware-configuration.nix
     ./modules.nix
     ./disko.nix
   ];

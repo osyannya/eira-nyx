@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   rootDevice = "/dev/mapper/crypted";
-  maxSnapshots = 8;
+  maxSnapshots = 12;
 in {
   systemd.services.persist-snapshots = {
     description = "Capture pristine @persist state before user login";

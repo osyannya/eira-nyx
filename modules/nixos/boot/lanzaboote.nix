@@ -9,7 +9,10 @@
 
   boot.lanzaboote = {
     enable = true;
+    autoGenerateKeys.enable = true;
     pkiBundle = "/persist/var/lib/sbctl";
+    autoEnrollKeys.enable = true; # manual reboot
+    configurationLimit = 12;
   };
 }
 

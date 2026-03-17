@@ -9,7 +9,7 @@ in {
     (modulesNixOS + /boot/initrd/ephemeral-root.nix)
     # (modulesNixOS + /boot/initrd/persist-verification.nix)
     (modulesNixOS + /boot/kernel.nix)
-    # (modulesNixOS + /boot/lanzaboote.nix) # temporaly disabled
+    (modulesNixOS + /boot/lanzaboote.nix)
     (modulesNixOS + /boot/loader.nix)
 
     # Desktop

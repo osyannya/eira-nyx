@@ -6,7 +6,7 @@ in {
   imports = [
     # Boot
     (modulesNixOS + /boot/early-systemd.nix)
-    (modulesNixOS + /boot/initrd/ephemeral-root.nix)
+    # (modulesNixOS + /boot/initrd/ephemeral-root.nix)
     # (modulesNixOS + /boot/initrd/persist-verification.nix)
     (modulesNixOS + /boot/kernel.nix)
     (modulesNixOS + /boot/lanzaboote.nix)
@@ -20,7 +20,7 @@ in {
     (modulesNixOS + /desktop/themes/adwaita-dark.nix)
 
     # Features
-    (modulesNixOS + /features/apparmor.nix)
+    # (modulesNixOS + /features/apparmor.nix)
     (modulesNixOS + /features/default.nix)
     (modulesNixOS + /features/zram.nix)
 
@@ -28,14 +28,14 @@ in {
     (modulesNixOS + /network/dns.nix)
     (modulesNixOS + /network/firewall/nftables.nix)
     (modulesNixOS + /network/interfaces.nix)
+    (modulesNixOS + /network/tools.nix)
     (modulesNixOS + /network/wireless/wpa-supplicant.nix)
 
     # Packages
     (modulesNixOS + /packages/core.nix)
     (modulesNixOS + /packages/files.nix)
     (modulesNixOS + /packages/hacking.nix)
-    (modulesNixOS + /packages/network-tools.nix)
-    (modulesNixOS + /packages/security-tools.nix)
+    (modulesNixOS + /packages/security.nix)
 
     # Programs
     (modulesNixOS + /programs/git.nix)

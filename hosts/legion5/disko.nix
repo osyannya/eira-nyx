@@ -2,8 +2,17 @@
 
 {
   disko.devices = {
+    nodev = {
+      "/" = {
+        fsType = "tmpfs";
+        mountOptions = [
+          "defaults"
+          "mode=755"
+        ];
+      };
+    };
     disk = {
-      # First drive ssd
+      # ssd
       main = {
         type = "disk";
         device = "/dev/nvme0n1";
@@ -27,7 +36,7 @@
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted"; # Maps to /dev/mapper/crypted
+                name = "crypted"; # Mapped to /dev/mapper/crypted
                 settings = {
                   allowDiscards = true;
                   bypassWorkqueues = true;
@@ -46,10 +55,10 @@
                   type = "btrfs";
                   extraArgs = [ "-f" "-L pool" ];
                   subvolumes = {
-                    "@" = {
-                      mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
+                    # "@" = {
+                      # mountpoint = "/";
+                      # mountOptions = [ "compress=zstd" "noatime" ];
+                    # };
                     "@nix" = {
                       mountpoint = "/nix";
                       mountOptions = [ "compress=zstd" "noatime" ];
@@ -71,7 +80,7 @@
         };
       };
 
-      # Second drive hdd
+      # hdd
       storage = {
         type = "disk";
         device = "/dev/sda";

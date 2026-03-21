@@ -39,6 +39,9 @@
     ];
   };
 
+  # Needed for impermanence
+  fileSystems."/persist".neededForBoot = true;
+
   # Groups
   users.groups.network = {}; # Network secrets
 

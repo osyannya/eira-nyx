@@ -9,8 +9,10 @@
     gnugrep
     gnused
     gnutar
+    gptfdisk
     gzip
     # moreutils
+    parted
     procps
     pciutils
     shadow

@@ -46,7 +46,6 @@
       ".librewolf"
 
       ".local/share/lutris"
-      ".local/share/mpd"
       ".local/share/nvim"
       ".local/share/org.localsend.localsend_app"
       ".local/share/PrismLauncher"

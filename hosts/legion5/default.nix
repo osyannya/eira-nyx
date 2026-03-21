@@ -4,7 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./modules.nix
-    # ./disko.nix
+    ./disko.nix
   ];
 
   # Identity
@@ -23,10 +23,30 @@
     inputs.agenix.packages.${pkgs.system}.default
   ];
 
+  environment.persistence."/persist" = {
+    enable = true;
+    directories = [
+      "/var/lib/bluetooth"
+      "/var/lib/nixos"
+      "/var/lib/sbctl"
+      "/var/lib/systemd"
+      "/var/log"
+    ];
+    files = [
+      { file = "/etc/machine-id"; parentDirectory = { mode = "0644"; }; }
+      { file = "/etc/ssh/ssh_host_ed25519_key"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
+      { file = "/etc/ssh/ssh_host_ed25519_key.pub"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
+    ];
+  };
+
+  # Needed for impermanence
+  fileSystems."/persist".neededForBoot = true;
+
   # Groups
   users.groups.network = {}; # Network secrets
 
   # Users
+  users.mutableUsers = false;
   users.users.root = {
     hashedPasswordFile = config.age.secrets.rootPassword.path;
   };
@@ -51,8 +71,8 @@
 
   # Secrets
   age.identityPaths = [
-    "/etc/ssh/ssh_host_ed25519_key"
-    "/home/alva/.ssh/id_ed25519"
+    "/persist/etc/ssh/ssh_host_ed25519_key"
+    "/persist/home/alva/.ssh/id_ed25519"
   ];
 
   age.secrets = {

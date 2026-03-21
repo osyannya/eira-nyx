@@ -72,10 +72,6 @@
 
           # Allow only established traffic
           ct state established,related accept
-
-          # VM traffic
-          iifname "veth-host-wan" ct state established,related accept
-          oifname "veth-host-wan" accept
         }
 
         chain output {

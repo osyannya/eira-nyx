@@ -9,5 +9,6 @@
     openssh
     openssl
     qemu
+    veracrypt
   ];
 }

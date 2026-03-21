@@ -2,6 +2,15 @@
 
 {
   disko.devices = {
+    nodev = {
+      "/" = {
+        fsType = "tmpfs";
+        mountOptions = [
+          "defaults"
+          "mode=755"
+        ];
+      };
+    };
     disk = {
       main = {
         type = "disk";
@@ -45,10 +54,10 @@
                   type = "btrfs";
                   extraArgs = [ "-f" "-L pool" ];
                   subvolumes = {
-                    "@" = {
-                      mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
+                    # "@" = {
+                      # mountpoint = "/";
+                      # mountOptions = [ "compress=zstd" "noatime" ];
+                    # };
                     "@nix" = {
                       mountpoint = "/nix";
                       mountOptions = [ "compress=zstd" "noatime" ];

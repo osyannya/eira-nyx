@@ -5,7 +5,7 @@ let
     set -euo pipefail
 
     WALLPAPER_DIR="$HOME/Pictures/wallpapers/desktop"
-    FALLBACK_COLOR="#00aaaa"
+    FALLBACK_COLOR="#ff00ff"
     CURRENT_FILE="/tmp/current-sway-wallpaper"
 
     # Wait for Wayland startup

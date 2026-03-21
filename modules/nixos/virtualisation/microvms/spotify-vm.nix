@@ -2,6 +2,9 @@
 
 {
   microvm.vms.spotify = {
+    pkgs = pkgs;
+    specialArgs = { inherit inputs; };
+
     config = { config, pkgs, ... }:
 
     {
@@ -79,7 +82,6 @@
         };
       };
 
-      nixpkgs.config.allowUnfree = true;
       environment.systemPackages = with pkgs; [ waypipe spotify ];
 
       systemd.services.waypipe-client = {

@@ -9,7 +9,7 @@ in {
     # (modulesNixOS + /boot/initrd/ephemeral-root.nix)
     # (modulesNixOS + /boot/initrd/persist-verification.nix)
     (modulesNixOS + /boot/kernel.nix)
-    # (modulesNixOS + /boot/lanzaboote.nix) # temporaly disabled
+    (modulesNixOS + /boot/lanzaboote.nix)
     (modulesNixOS + /boot/loader.nix)
 
     # Desktop
@@ -20,7 +20,7 @@ in {
     (modulesNixOS + /desktop/themes/adwaita-dark.nix)
 
     # Features
-    (modulesNixOS + /features/apparmor.nix)
+    # (modulesNixOS + /features/apparmor.nix)
     (modulesNixOS + /features/default.nix)
     (modulesNixOS + /features/zram.nix)
 
@@ -28,14 +28,14 @@ in {
     (modulesNixOS + /network/dns.nix)
     (modulesNixOS + /network/firewall/nftables.nix)
     (modulesNixOS + /network/interfaces.nix)
+    (modulesNixOS + /network/tools.nix)
     (modulesNixOS + /network/wireless/wpa-supplicant.nix)
 
     # Packages
     (modulesNixOS + /packages/core.nix)
     (modulesNixOS + /packages/files.nix)
     (modulesNixOS + /packages/hacking.nix)
-    (modulesNixOS + /packages/network-tools.nix)
-    (modulesNixOS + /packages/security-tools.nix)
+    (modulesNixOS + /packages/security.nix)
 
     # Programs
     (modulesNixOS + /programs/git.nix)
@@ -55,8 +55,8 @@ in {
     (modulesNixOS + /services/dbus.nix)
     (modulesNixOS + /services/getty.nix)
     (modulesNixOS + /services/logind.nix)
+    (modulesNixOS + /services/persist-snapshots.nix)
     (modulesNixOS + /services/polkit.nix)
-    # (modulesNixOS + /services/snapshots.nix)
     (modulesNixOS + /services/upower.nix)
 
     # Video

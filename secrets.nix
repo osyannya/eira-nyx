@@ -2,19 +2,19 @@ let
   # /persist/etc/ssh/ssh_host_ed25519_key.pub
   legion5 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDYJ7yC167CdM/b4QvTptrkwvfT/fwd9eR5Go0b3xH7s";
   # /persist/home/alva/.ssh/id_ed25519.pub
-  # alva = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPa1If2ZLO/5SiBpqvgKf7qyuTCXtFJv3VQFF8ShTduo"; 
+  alva = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICRCEVzNNxzwyJaNqGyYLrZA4Cel1sPVhRHjhlFhoIqm"; 
 
   svitoglyad = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFlgX1+zwpoZCOsQJf5NIUC5f/NAt17W8Bzoyo3Pj64K";
   mriya = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDHJUdm2lPorUs+od+WIJtM8zBv286ggYZZjGe8WhFI";
 in
 {
-  "hosts/legion5/secrets/root-password.age".publicKeys = [ legion5 ];
+  "hosts/legion5/secrets/root-password.age".publicKeys = [ legion5 alva ];
   "hosts/svitoglyad/secrets/root-password.age".publicKeys = [ svitoglyad mriya ];
 
-  "users/alva/secrets/password.age".publicKeys = [ legion5 ];
+  "users/alva/secrets/password.age".publicKeys = [ legion5 alva ];
   "users/mriya/secrets/password.age".publicKeys = [ svitoglyad mriya ];
 
-  "secrets/shared/networks.age".publicKeys = [ mriya ]; # alva removed
+  "secrets/shared/networks.age".publicKeys = [ alva mriya ];
 }
 
 # Generate host ssh key pair

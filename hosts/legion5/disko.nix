@@ -111,6 +111,7 @@
                   type = "filesystem";
                   format = "ext4";
                   mountpoint = "/storage";
+                  mountOptions = [ "defaults" "noatime" ];
                 };
               };
             };

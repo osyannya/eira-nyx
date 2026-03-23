@@ -2,10 +2,6 @@
 let
   rootDevice = "/dev/mapper/crypted";
 in {
-  boot.initrd.systemd.enable = true;
-
-  fileSystems."/persist".neededForBoot = true;
-
   # Ephemeral root script
   boot.initrd.systemd.services.ephemeral-root = {
     description = "Refresh btrfs root subvolume";

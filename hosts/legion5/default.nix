@@ -42,6 +42,13 @@
   # Needed for impermanence
   fileSystems."/persist".neededForBoot = true;
 
+  # Storage
+  systemd.tmpfiles.rules = [
+    "d /storage/Games 0755 alva users - -"
+    "d /storage/Media 0755 alva users - -"
+    "d /storage/Backups 0700 root root - -"
+  ];
+
   # Groups
   users.groups.network = {}; # Network secrets
 

@@ -15,18 +15,11 @@
     GBM_BACKEND = "nvidia-drm";
     LIBVA_DRIVER_NAME = "nvidia";
     WLR_NO_HARDWARE_CURSORS = "1";
-    WLR_RENDERER_ALLOW_SOFTWARE = "1";
-    WLR_DRM_NO_ATOMIC = "1";
-  };
-
-  environment.variables = {
-    WLR_BACKEND = "vulkan";
   };
 
   hardware.graphics = {
     enable = true;
-    # driSupport = true;
-    # driSupport32Bit = true; both have no impact
+    enable32Bit = true;
   };
 
   boot.kernelParams = [

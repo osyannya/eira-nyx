@@ -8,7 +8,6 @@ in {
     (modulesHome + /desktop/compositor/sway.nix)
     (modulesHome + /desktop/cursors/bibata-modern.nix)
     (modulesHome + /desktop/themes/adwaita-dark.nix)
-    (modulesHome + /desktop/variables.nix)
     (modulesHome + /desktop/xdg.nix)
 
     # Features

@@ -7,7 +7,6 @@ in {
     # Boot
     (modulesNixOS + /boot/early-systemd.nix)
     # (modulesNixOS + /boot/initrd/ephemeral-root.nix)
-    # (modulesNixOS + /boot/initrd/persist-verification.nix)
     (modulesNixOS + /boot/kernel.nix)
     (modulesNixOS + /boot/lanzaboote.nix)
     (modulesNixOS + /boot/loader.nix)

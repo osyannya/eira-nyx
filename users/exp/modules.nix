@@ -4,24 +4,18 @@ let
   modulesHome = ../../modules/home;
 in {
   imports = [
+    # Desktop
+    (modulesHome + /desktop/compositor/sway.nix)
+    (modulesHome + /desktop/cursors/bibata-modern.nix)
+    (modulesHome + /desktop/themes/adwaita-dark.nix)
+    (modulesHome + /desktop/xdg.nix)
+
     # Features
-    (modulesHome + /features/desktop/compositor/sway.nix)
-    (modulesHome + /features/desktop/cursors/bibata-modern.nix)
-    (modulesHome + /features/desktop/themes/adwaita-dark.nix)
-    (modulesHome + /features/desktop/variables.nix)
-    (modulesHome + /features/desktop/xdg.nix)
+    # (modulesHome + /features/fcitx5.nix)
 
-    (modulesHome + /features/fcitx5.nix)
-
-    (modulesHome + /features/home-files/bash-profile.nix)
-    (modulesHome + /features/home-files/bashrc.nix)
-
-    (modulesHome + /features/wrappers/my-clipboard.nix)
-    (modulesHome + /features/wrappers/my-menu.nix)
-    (modulesHome + /features/wrappers/screenshot-area.nix)
-    (modulesHome + /features/wrappers/screenshot.nix)
-    (modulesHome + /features/wrappers/swaylock-wrapper.nix)
-    (modulesHome + /features/wrappers/translator.nix)
+    # Files
+    (modulesHome + /files/bash-profile.nix)
+    (modulesHome + /files/bashrc.nix)
 
     # Packages
     (modulesHome + /packages/apps.nix)
@@ -36,13 +30,12 @@ in {
     (modulesHome + /programs/git.nix)
     (modulesHome + /programs/i3status-rust.nix)
     (modulesHome + /programs/imv.nix)
-    (modulesHome + /programs/joplin-desktop.nix)
+    # (modulesHome + /programs/joplin-desktop.nix)
     (modulesHome + /programs/keepassxc.nix)
     (modulesHome + /programs/librewolf.nix)
-    (modulesHome + /programs/lutris.nix)
+    # (modulesHome + /programs/lutris.nix)
     (modulesHome + /programs/mpv.nix)
-    (modulesHome + /programs/ncmpcpp.nix)
-    (modulesHome + /programs/obs-studio.nix)
+    # (modulesHome + /programs/obs-studio.nix)
     (modulesHome + /programs/swaylock.nix)
     (modulesHome + /programs/vscode.nix)
 
@@ -50,9 +43,25 @@ in {
     (modulesHome + /services/cliphist.nix)
     (modulesHome + /services/idle-inhibit.nix)
     (modulesHome + /services/mako.nix)
-    (modulesHome + /services/mpd.nix)
     (modulesHome + /services/polkit-kde.nix)
     (modulesHome + /services/swayidle.nix)
     (modulesHome + /services/wlsunset.nix)
+
+    # Wrappers
+    # (modulesHome + /wrappers/connect-wifi.nix)
+    # (modulesHome + /wrappers/disable-wan.nix)
+    # (modulesHome + /wrappers/disconnect-wifi.nix)
+    # (modulesHome + /wrappers/enable-lab.nix)
+    # (modulesHome + /wrappers/enable-wan.nix)
+    (modulesHome + /wrappers/firewall-switch.nix)
+    # (modulesHome + /wrappers/linux-vm.nix)
+    (modulesHome + /wrappers/my-clipboard.nix)
+    (modulesHome + /wrappers/my-menu.nix)
+    # (modulesHome + /wrappers/scan-wifi.nix)
+    (modulesHome + /wrappers/screenshot-area.nix)
+    (modulesHome + /wrappers/screenshot.nix)
+    (modulesHome + /wrappers/swaylock-wrapper.nix)
+    # (modulesHome + /wrappers/temporary-wifi.nix)
+    (modulesHome + /wrappers/wallpaper-switch.nix)
   ];
 }

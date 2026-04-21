@@ -27,6 +27,7 @@
     enable = true;
     directories = [
       "/var/lib/bluetooth"
+      "/var/lib/microvms"
       "/var/lib/nixos"
       "/var/lib/sbctl"
       "/var/lib/systemd"
@@ -49,8 +50,15 @@
     "d /storage/Backups 0700 root root - -"
   ];
 
+  # microvms directory
+  systemd.tmpfiles.rules = [
+    "d /persist/var/lib/microvms 0775 root microvms - -"
+  ];
+
   # Groups
-  users.groups.network = {}; # Network secrets
+  users.groups.network = { gid = 999; }; # Network secrets
+  users.groups.nofirewall = { gid = 991; }; # Firewall bypass
+  users.groups.microvms = { gid = 990; }; # Access to microvms directory
 
   # Users
   users.mutableUsers = false;
@@ -62,7 +70,7 @@
     isNormalUser = true;
     createHome = true;
     home = "/home/alva";
-    extraGroups = [ "audio" "network" "video" "wheel" "kvm" ];
+    extraGroups = [ "audio" "microvms" "network" "nofirewall" "video" "wheel" "kvm" ];
     hashedPasswordFile = config.age.secrets.alvaPassword.path;
   };
 

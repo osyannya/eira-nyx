@@ -60,12 +60,13 @@
       ".local/state/wireplumber"
 
       ".mozilla"
-        ".pki"
-        ".steam"
+      ".pki"
+      ".ssh" # To keep trusted hosts
+      ".steam"
     ];
-    files = [
-      { file = ".ssh/id_ed25519"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
-      { file = ".ssh/id_ed25519.pub"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
-    ];
+    # files = [
+      # { file = ".ssh/id_ed25519"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
+      # { file = ".ssh/id_ed25519.pub"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
+    # ];
   };
 }

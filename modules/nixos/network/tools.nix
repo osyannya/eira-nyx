@@ -6,7 +6,8 @@
     dnsmasq
     iproute2
     openvpn
-    protonvpn-gui
+    # protonvpn-gui
     wget
+    wireguard-tools
   ];
 }

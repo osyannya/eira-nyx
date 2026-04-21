@@ -19,7 +19,7 @@ in {
     (modulesNixOS + /desktop/themes/adwaita-dark.nix)
 
     # Features
-    # (modulesNixOS + /features/apparmor.nix)
+    (modulesNixOS + /features/apparmor.nix)
     (modulesNixOS + /features/default.nix)
     (modulesNixOS + /features/zram.nix)
 
@@ -46,6 +46,7 @@ in {
     (modulesNixOS + /programs/tcpdump.nix)
     (modulesNixOS + /programs/tmux.nix)
     (modulesNixOS + /programs/vim.nix)
+    (modulesNixOS + /programs/virt-manager.nix)
     (modulesNixOS + /programs/wireshark.nix)
 
     # Services
@@ -63,6 +64,8 @@ in {
     # (modulesNixOS + /video/nvidia.nix)
 
     # Virtualisation
+    (modulesNixOS + /virtualisation/libvirtd.nix)
+    (modulesNixOS + /virtualisation/microvms/onion-vault.nix)
     # (modulesNixOS + /virtualisation/microvms/spotify-vm.nix)
   ];
 }

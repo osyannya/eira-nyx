@@ -63,6 +63,7 @@ in {
     (modulesNixOS + /video/nvidia.nix)
 
     # Virtualisation
+    (modulesNixOS + /virtualisation/microvms/onion-vault.nix)
     # (modulesNixOS + /virtualisation/microvms/spotify-vm.nix)
   ];
 }

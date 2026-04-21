@@ -64,6 +64,11 @@
           # LocalSend
           iifname { "en*", "wl*" } tcp dport 53317 accept
           iifname { "en*", "wl*" } udp dport 53317 accept
+
+          # VM ISOLATION INPUT RULES
+          iifname "virbr0" udp dport { 53, 67 } accept
+          iifname "virbr0" tcp dport 53 accept 
+          iifname "virbr0" drop
         }
 
         chain forward {
@@ -72,6 +77,12 @@
 
           # Allow only established traffic
           ct state established,related accept
+
+          # VM ROUTING RULES
+          iifname "virbr0" oifname { "en*", "wl*" } accept
+      
+          # Block VMs from talking to each other
+          iifname "virbr0" oifname "virbr0" drop
         }
 
         chain output {
@@ -123,6 +134,17 @@
           # LocalSend
           oifname { "en*", "wl*" } tcp dport 53317 accept
           oifname { "en*", "wl*" } udp dport 53317 accept
+
+          # Allow bypass firewall for Tor
+          skgid 991 accept
+
+          # Allow bypass firewall for proton VPN
+          oifname { "en*", "wl*" } udp dport 51820 accept
+          oifname "proton*" accept
+
+          # HOST-TO-VM RULES
+          oifname "virbr0" udp sport { 53, 67 } accept
+          oifname "virbr0" tcp sport 53 accept
         }
       }
     '';

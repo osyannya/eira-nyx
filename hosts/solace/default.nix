@@ -26,22 +26,29 @@
   environment.persistence."/persist" = {
     enable = true;
     directories = [
-      "/var/lib/bluetooth"
+      # "/var/lib/bluetooth"
       "/var/lib/nixos"
+      # "/var/lib/sbctl"
       "/var/lib/systemd"
       "/var/log"
     ];
     files = [
       { file = "/etc/machine-id"; parentDirectory = { mode = "0644"; }; }
-      { file = "/etc/ssh/ssh_host_ed25519_key"; parentDirectory = { mode = "u=rw,g=,o="; }; }
-      { file = "/etc/ssh/ssh_host_ed25519_key.pub"; parentDirectory = { mode = "u=rw,g=r,o=r"; }; }
+      { file = "/etc/ssh/ssh_host_ed25519_key"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
+      { file = "/etc/ssh/ssh_host_ed25519_key.pub"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
     ];
   };
 
+  # Needed for impermanence
+  fileSystems."/persist".neededForBoot = true;
+
   # Groups
-  users.groups.network = {}; # Network secrets
+  # users.groups.network = {}; # Network secrets
+  users.groups.nofirewall = {}; # Firewall bypass
+  users.groups.nofirewall.gid = 991;
 
   # Users
+  users.mutableUsers = false
   users.users.root = {
     hashedPasswordFile = config.age.secrets.rootPassword.path;
   };
@@ -50,7 +57,7 @@
     isNormalUser = true;
     createHome = true;
     home = "/home/exp";
-    extraGroups = [ "audio" "network" "video" "wheel" "kvm" ];
+    extraGroups = [ "audio" "network" "nofirewall" "video" "wheel" "kvm" ];
     hashedPasswordFile = config.age.secrets.expPassword.path;
   };
 
@@ -67,7 +74,7 @@
   # Secrets
   age.identityPaths = [
     "/persist/etc/ssh/ssh_host_ed25519_key"
-    "/persist/home/mriya/.ssh/id_ed25519"
+    "/persist/home/exp/.ssh/id_ed25519"
   ];
 
   age.secrets = {
@@ -81,10 +88,10 @@
       owner = "root";
       mode = "0400";
     };
-    networks = {
-      file = "${inputs.self}/secrets/shared/networks.age";
-      group = "network";
-      mode = "0440";
-    };
+    # networks = {
+      # file = "${inputs.self}/secrets/shared/networks.age";
+      # group = "network";
+      # mode = "0440";
+    # };
   };
 }

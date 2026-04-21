@@ -54,13 +54,16 @@ in {
     (modulesHome + /wrappers/enable-lab.nix)
     (modulesHome + /wrappers/enable-wan.nix)
     (modulesHome + /wrappers/firewall-switch.nix)
+    (modulesHome + /wrappers/linux-vm.nix)
     (modulesHome + /wrappers/my-clipboard.nix)
     (modulesHome + /wrappers/my-menu.nix)
     (modulesHome + /wrappers/scan-wifi.nix)
     (modulesHome + /wrappers/screenshot-area.nix)
     (modulesHome + /wrappers/screenshot.nix)
+    (modulesHome + /wrappers/stealth-vm.nix)
     (modulesHome + /wrappers/swaylock-wrapper.nix)
     (modulesHome + /wrappers/temporary-wifi.nix)
     (modulesHome + /wrappers/wallpaper-switch.nix)
+    (modulesHome + /wrappers/windows-vm.nix)
   ];
 }

@@ -1,27 +1,23 @@
 { config, lib, pkgs, ... }:
 
-{
-  # Compositor
-  programs.sway = {
-    enable = true;
+let
+  cfg = config.eira.system.desktop.compositor.sway;
+in {
+  options.eira.system.desktop.compositor.sway = {
+    enable = lib.mkEnableOption "Sway Wayland compositor and portals";
   };
 
-  # xdg-desktop-portal implementation
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-    ];
-  };
+  config = lib.mkIf cfg.enable {
+    programs.sway = {
+      enable = true;
+    };
 
-  # Variables
-  environment.sessionVariables = {
-    XDG_CURRENT_DESKTOP = "sway";
-    XDG_SESSION_DESKTOP = "sway";
-    XDG_SESSION_TYPE = "wayland";
-    GDK_BACKEND = "wayland";
-    # QT_QPA_PLATFORMTHEME = "qt5ct";
-    QT_QPA_PLATFORM = "wayland";
+    xdg.portal = {
+      enable = true;
+      wlr.enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+      ];
+    };
   };
 }

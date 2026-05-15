@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.enable-wan;
+
   enable-wan = pkgs.writeShellScriptBin "enable-wan" ''
     set -euo pipefail
 
@@ -208,7 +210,12 @@ let
     done
     echo "[enable-wan] tear down with: sudo disable-wan.sh"
   '';
-in
-{
-  home.packages = [ enable-wan ];
+in {
+  options.eira.home.wrappers.enable-wan = {
+    enable = lib.mkEnableOption "Create network namespace with Internet access";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ enable-wan ];
+  };
 }

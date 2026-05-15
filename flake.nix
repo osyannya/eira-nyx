@@ -4,50 +4,21 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11"; # Update manually
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-25.11"; # Update manually
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    disko.url = "github:nix-community/disko";
     impermanence.url = "github:nix-community/impermanence";
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.0.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    microvm = {
-      url = "github:microvm-nix/microvm.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    sops-nix.url = "github:Mic92/sops-nix";
+    lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0"; # Check later for updates
+    microvm.url = "github:microvm-nix/microvm.nix";
+    colmena.url = "github:zhaofengli/colmena";
+    nixos-anywhere.url = "github:nix-community/nixos-anywhere";
+    stylix.url = "github:danth/stylix";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-    let
-      mkSystem = { hostPath, system ? "x86_64-linux" }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            inputs.disko.nixosModules.disko
-            inputs.impermanence.nixosModules.impermanence
-            inputs.agenix.nixosModules.default
-            inputs.lanzaboote.nixosModules.lanzaboote
-            inputs.microvm.nixosModules.host
-            home-manager.nixosModules.home-manager
-            hostPath
-          ];
-        };
-    in {
-      nixosConfigurations = {
-        legion5 = mkSystem { hostPath = ./hosts/legion5; };
-        svitoglyad = mkSystem { hostPath = ./hosts/svitoglyad; };
-        solace = mkSystem { hostPath = ./hosts/solace; }; # For different architecture: system = "aarch64-linux";
-      };
-    };
+  outputs = inputs: import ./lib/mkFlake.nix { inherit inputs; };
 }

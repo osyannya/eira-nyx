@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.firewall-switch;
+
   firewall-switch = pkgs.writeShellScriptBin "firewall-switch" ''
     set -euo pipefail
 
@@ -65,7 +67,12 @@ EOF
         ;;
     esac
   '';
-in
-{
-  home.packages = [ firewall-switch ];
+in {
+  options.eira.home.wrappers.firewall-switch = {
+    enable = lib.mkEnableOption "Custom script for firewall control";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ firewall-switch ];
+  };
 }

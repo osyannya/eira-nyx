@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.enable-lab;
+
   enable-lab = pkgs.writeShellScriptBin "enable-lab" ''
     set -euo pipefail
 
@@ -93,7 +95,12 @@ let
     done
     echo "[enable-lab] tear down by deleting the namespace: sudo ip netns delete ''${NS}"
   '';
-in
-{
-  home.packages = [ enable-lab ];
+in {
+  options.eira.home.wrappers.enable-lab = {
+    enable = lib.mkEnableOption "Create network namespace without Internet access ";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ enable-lab ];
+  };
 }

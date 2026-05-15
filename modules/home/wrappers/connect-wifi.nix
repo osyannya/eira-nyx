@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.connect-wifi;
+
   connect-wifi = pkgs.writeShellScriptBin "connect-wifi" ''
     set -euo pipefail
 
@@ -127,7 +129,12 @@ let
     notify "Failed to connect to any available known network" critical
     exit 2
   '';
-in
-{
-  home.packages = [ connect-wifi ];
+in {
+  options.eira.home.wrappers.connect-wifi = {
+    enable = lib.mkEnableOption "Custom wifi script";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ connect-wifi ];
+  };
 }

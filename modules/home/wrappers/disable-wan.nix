@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.disable-wan;
+
   disable-wan = pkgs.writeShellScriptBin "disable-wan" ''
     set -euo pipefail
 
@@ -56,7 +58,12 @@ let
 
     echo "[disable-wan] Teardown complete."
   '';
-in
-{
-  home.packages = [ disable-wan ];
+in {
+  options.eira.home.wrappers.disable-wan = {
+    enable = lib.mkEnableOption "Delete wan network namespace";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ disable-wan ];
+  };
 }

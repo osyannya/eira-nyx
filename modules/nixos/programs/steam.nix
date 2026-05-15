@@ -1,7 +1,15 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
-{
-  programs.steam.enable = true;
+let
+  cfg = config.eira.system.programs.steam;
+in {
+  options.eira.system.programs.steam = {
+    enable = lib.mkEnableOption "Steam";
+  };
+
+  config = lib.mkIf cfg.enable {
+    programs.steam.enable = true;
+  };
 }
 
-# First launch of steam failed, check this latter on a new host or with deleted home
+# Also add check for home manager and impermanence

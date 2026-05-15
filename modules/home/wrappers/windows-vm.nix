@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.windows-vm;
+
   windows-vm = pkgs.writeShellScriptBin "windows-vm" ''
     set -euo pipefail
 
@@ -148,7 +150,12 @@ let
         -audiodev sdl,id=snd0 \
         -device virtio-rng-pci
   '';
-in
-{
-  home.packages = [ windows-vm ];
+in {
+  options.eira.home.wrappers.windows-vm = {
+    enable = lib.mkEnableOption "Custom script to run Windows guest";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ windows-vm ];
+  };
 }

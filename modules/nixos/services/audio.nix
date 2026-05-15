@@ -1,11 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
-{
-  # services.pulseaudio.enable = true;
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
+let
+  cfg = config.eira.system.services.audio;
+in {
+  options.eira.system.services.audio = {
+    enable = lib.mkEnableOption "Pipewire audio server and realtime scheduling";
   };
 
-  security.rtkit.enable = true;
+  config = lib.mkIf cfg.enable {
+    services.pipewire = {
+      enable = true;
+      pulse.enable = true;
+    };
+    security.rtkit.enable = true;
+  };
 }

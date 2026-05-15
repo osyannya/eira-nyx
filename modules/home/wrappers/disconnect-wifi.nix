@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.disconnect-wifi;
+
   disconnect-wifi = pkgs.writeShellScriptBin "disconnect-wifi" ''
     set -euo pipefail
 
@@ -40,7 +42,12 @@ let
       ${pkgs.libnotify}/bin/notify-send -u normal "Wi-Fi" "Already disconnected"
     fi
   '';
-in
-{
-  home.packages = [ disconnect-wifi ];
+in {
+  options.eira.home.wrappers.disconnect-wifi = {
+    enable = lib.mkEnableOption "Disconnect wifi via wpa supplicant";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ disconnect-wifi ];
+  };
 }

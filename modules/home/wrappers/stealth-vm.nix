@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.stealth-vm;
+
   stealth-vm = pkgs.writeShellScriptBin "stealth-vm" ''
     set -euo pipefail
 
@@ -138,7 +140,12 @@ let
         -device hda-micro,audiodev=snd0 \
         -audiodev sdl,id=snd0
   '';
-in
-{
-  home.packages = [ stealth-vm ];
+in {
+    options.eira.home.wrappers.stealth-vm = {
+    enable = lib.mkEnableOption "Decrease chances of guest detecting VM";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ stealth-vm ];
+  };
 }

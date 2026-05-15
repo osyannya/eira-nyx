@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.linux-vm;
+
   linux-vm = pkgs.writeShellScriptBin "linux-vm" ''
     set -euo pipefail
 
@@ -133,7 +135,12 @@ let
         -audiodev sdl,id=snd0 \
         -device virtio-rng-pci
   '';
-in
-{
-  home.packages = [ linux-vm ];
+in {
+  options.eira.home.wrappers.linux-vm = {
+    enable = lib.mkEnableOption "Custom script to run VM with QEMU";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ linux-vm ];
+  };
 }

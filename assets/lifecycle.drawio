@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="L043nJJvE2bFFse52fIM">
+    <mxGraphModel dx="794" dy="435" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-18" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-180;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" value="" vertex="1">
+          <mxGeometry height="40" width="160" x="320" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-21" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=65;flipV=1;legacyAnchorPoints=0;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" value="" vertex="1">
+          <mxGeometry height="40" width="160" x="230" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-20" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-65;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" value="" vertex="1">
+          <mxGeometry height="40" width="160" x="190" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-13" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" value="" vertex="1">
+          <mxGeometry height="40" width="160" x="240" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Declaration" vertex="1">
+          <mxGeometry height="30" width="60" x="300" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-16" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=65;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" value="" vertex="1">
+          <mxGeometry height="40" width="160" x="330" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-17" parent="1" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-240;fillColor=#1ba1e2;strokeColor=#006EAF;fontColor=#ffffff;" value="" vertex="1">
+          <mxGeometry height="40" width="160" x="370" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-23" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=60;" value="Build" vertex="1">
+          <mxGeometry height="30" width="60" x="380" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-24" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-65;" value="Monitoring" vertex="1">
+          <mxGeometry height="30" width="60" x="240" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-25" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-240;" value="Verification" vertex="1">
+          <mxGeometry height="30" width="60" x="420" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-27" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-115;" value="Execution" vertex="1">
+          <mxGeometry height="30" width="60" x="280" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="aqCKUKkAjYEXduSEdqAF-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Deployment" vertex="1">
+          <mxGeometry height="30" width="60" x="360" y="285" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

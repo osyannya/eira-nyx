@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.temporary-wifi;
+  
   temporary-wifi = pkgs.writeShellScriptBin "temporary-wifi" ''
     set -euo pipefail
 
@@ -44,7 +46,12 @@ let
     ${pkgs.libnotify}/bin/notify-send -u critical "Wi-Fi" "Failed to connect to $SSID"
     exit 1
   '';
-in
-{
-  home.packages = [ temporary-wifi ];
+in {
+  options.eira.home.wrappers.temporary-wifi = {
+    enable = lib.mkEnableOption "Script for connecting to wifi once";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ temporary-wifi ];
+  };
 }

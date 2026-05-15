@@ -1,37 +1,38 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
-{
-  xdg = {
-    autostart.enable = true;
+let
+  cfg = config.eira.home.desktop.xdg;
+  persistEnabled = config.eira.home.security.impermanence.enable or false;
+in {
+  options.eira.home.desktop.xdg = {
+    enable = lib.mkEnableOption "XDG settings";
+  };
 
-    mimeApps = {
-      enable = true;
-      defaultApplications = {
-        "text/html" = "librewolf.desktop";
-        "x-scheme-handler/http" = "librewolf.desktop";
-        "x-scheme-handler/https" = "librewolf.desktop";
-        "x-scheme-handler/about" = "librewolf.desktop";
-        "x-scheme-handler/unknown" = "librewolf.desktop";
+  config = lib.mkIf cfg.enable {
+    xdg = {
+      autostart.enable = true;
+      
+      userDirs = {
+        enable = true;
+        createDirectories = true;
+      };
 
-        "audio/*" = ["mpv.desktop"];
-        "video/*" = ["mpv.desktop"];
-        "image/*" = ["imv.desktop"];
-
-        "application/x-extension-htm" = "librewolf.desktop";
-        "application/x-extension-html" = "librewolf.desktop";
-        "application/x-extension-shtml" = "librewolf.desktop";
-        "application/x-extension-xht" = "librewolf.desktop";
-        "application/x-extension-xhtml" = "librewolf.desktop";
-        "application/xhtml+xml" = "librewolf.desktop";
-        "application/json" = "librewolf.desktop";
-        "application/pdf" = ["librewolf.desktop"];
-        "x-scheme-handler/spotify" = ["spotify.desktop"];
+      mimeApps = {
+        enable = true;
       };
     };
 
-    userDirs = {
-      enable = true;
-      createDirectories = true;
+    home.persistence."/persist" = lib.mkIf (persistEnabled && config.xdg.userDirs.enable) {
+      directories = [
+        "Desktop"
+        "Documents"
+        "Downloads"
+        "Music"
+        "Pictures"
+        "Public"
+        "Templates"
+        "Videos"
+      ];
     };
   };
 }

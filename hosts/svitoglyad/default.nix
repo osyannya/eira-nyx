@@ -1,106 +1,57 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   imports = [
-    ./hardware-configuration.nix
-    ./modules.nix
+    inputs.disko.nixosModules.disko
     ./disko.nix
+    ./hardware-configuration.nix
+    ../../roles/workstation.nix
   ];
 
   # Identity
   networking.hostName = "svitoglyad";
+  nixpkgs.hostPlatform = "x86_64-linux";
+  system.stateVersion = "25.05"; 
+
+  # Deployment metadata
+  deployment = {
+    targetHost = "192.168.1.50";
+    targetUser = "root";
+    tags = [ "workstation" ];
+  };
+
+  # Time
   time.timeZone = "Europe/Kyiv";
-  i18n.defaultLocale = "en_US.UTF-8";
-  system.stateVersion = "25.05"; # Do not change
 
-  # Environment
-  environment.variables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-  };
-
-  environment.systemPackages = [
-    inputs.agenix.packages.${pkgs.system}.default
-  ];
-
-  environment.persistence."/persist" = {
-    enable = true;
-    directories = [
-      "/etc/libvirt"
-      "/var/lib/bluetooth"
-      "/var/lib/libvirt"
-      "/var/lib/microvms"
-      "/var/lib/nixos"
-      "/var/lib/sbctl"
-      "/var/lib/swtpm"
-      "/var/lib/systemd"
-      "/var/log"
-    ];
-    files = [
-      { file = "/etc/machine-id"; parentDirectory = { mode = "0644"; }; }
-      { file = "/etc/ssh/ssh_host_ed25519_key"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
-      { file = "/etc/ssh/ssh_host_ed25519_key.pub"; parentDirectory = { mode = "u=rwx,g=rx,o=rx"; }; }
-    ];
-  };
-
-  # Needed for impermanence
-  fileSystems."/persist".neededForBoot = true;
-
-  # microvms directory
-  systemd.tmpfiles.rules = [
-    "d /persist/var/lib/microvms 0775 root microvms - -"
-  ];
-
-  # Groups
-  users.groups.network = { gid = 999; }; # Network secrets
-  users.groups.nofirewall = { gid = 991; }; # Firewall bypass
-  users.groups.microvms = { gid = 990; }; # Access to microvms directory
-
-  # Users
-  users.mutableUsers = false;
-  users.users.root = {
-    hashedPasswordFile = config.age.secrets.rootPassword.path;
-  };
-
-  users.users.mriya = {
-    isNormalUser = true;
-    createHome = true;
-    home = "/home/mriya";
-    extraGroups = [ "audio" "libvirtd" "microvms" "network" "nofirewall" "video" "wheel" "kvm" ];
-    hashedPasswordFile = config.age.secrets.mriyaPassword.path;
-  };
-
-  # Home-manager
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      mriya = import ../../users/mriya/default.nix;
-    };
-  };
-
-  # Secrets
-  age.identityPaths = [
-    "/persist/etc/ssh/ssh_host_ed25519_key"
-    "/persist/home/mriya/.ssh/id_ed25519"
-  ];
-
-  age.secrets = {
-    rootPassword = {
-      file = "${inputs.self}/hosts/svitoglyad/secrets/root-password.age";
-      owner = "root";
-      mode = "0400";
-    };
-    mriyaPassword = {
-      file = "${inputs.self}/users/mriya/secrets/password.age";
-      owner = "root";
-      mode = "0400";
-    };
-    networks = {
-      file = "${inputs.self}/secrets/shared/networks.age";
-      group = "network";
-      mode = "0440";
+  eira = {
+    system = {
+      desktop = {
+        compositor.sway.enable = true;
+      };
+      programs = {
+        localsend.enable = true;
+        network-diagnostics.enable = true;
+        pentesting.enable = true;
+        steam.enable = true;
+      };
+      services = {
+        btrfs-lifecycle = {
+          enable = true;
+          rootDevice = "/dev/nvme0n1p2"; 
+        };
+      };
+      users = {
+        dynamicUsers.enable = false;
+      };
+      video = {
+        intel.enable = true;
+      };
+      virtualisation = {
+        microvm.enable = true;
+        microvms = {
+          onion-vault.enable = true;
+        };
+      };
     };
   };
 }

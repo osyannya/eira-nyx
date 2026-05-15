@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  cfg = config.eira.home.wrappers.scan-wifi;
+
   scan-wifi = pkgs.writeShellScriptBin "scan-wifi" ''
     set -euo pipefail
 
@@ -81,7 +83,12 @@ let
     }
     '
   '';
-in
-{
-  home.packages = [ scan-wifi ];
+in {
+  options.eira.home.wrappers.scan-wifi = {
+    enable = lib.mkEnableOption "Custom script to scan available wifi networks";
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = [ scan-wifi ];
+  };
 }

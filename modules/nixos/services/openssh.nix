@@ -2,7 +2,9 @@
 
 let
   cfg = config.eira.system.services.openssh;
-  fwEnabled = config.eira.system.network.firewall.enable or false;
+
+  hasFirewall = (config.options.eira.system.network.firewall.enable or null) != null;
+  firewallEnabled = hasFirewall && config.eira.system.network.firewall.enable;
 in {
   options.eira.system.services.openssh = {
     enable = lib.mkEnableOption "OpenSSH daemon";
@@ -10,7 +12,7 @@ in {
     port = lib.mkOption {
       type = lib.types.port;
       default = 22;
-      description = "Custom SSH port.";
+      description = "Custom SSH port";
     };
   };
 
@@ -26,10 +28,10 @@ in {
     };
 
     # Standard NixOS firewall fallback
-    networking.firewall.allowedTCPPorts = lib.mkIf (!fwEnabled) [ cfg.port ];
+    networking.firewall.allowedTCPPorts = lib.mkIf (!firewallEnabled) [ cfg.port ];
 
-    # Dynamic injection into your custom nftables ruleset
-    networking.nftables.ruleset = lib.mkIf fwEnabled ''
+    # Dynamic firewall
+    networking.nftables.ruleset = lib.mkIf firewallEnabled ''
       table inet filter {
         chain input {
           ip protocol tcp tcp dport ${toString cfg.port} accept

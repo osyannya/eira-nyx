@@ -3,7 +3,7 @@
 let
   cfg = config.eira.home.desktop.misc.idle-inhibit;
 in {
-  options.eira.home.services.idle-inhibit = {
+  options.eira.home.desktop.misc.idle-inhibit = {
     enable = lib.mkEnableOption "Wayland PipeWire idle inhibitor";
   };
 

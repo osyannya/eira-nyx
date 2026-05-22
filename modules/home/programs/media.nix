@@ -2,6 +2,12 @@
 
 let
   cfg = config.eira.home.programs.media;
+
+  hasImpermanence = (config.options.eira.home.security.impermanence.enable or null) != null;
+  impermanenceEnabled = hasImpermanence && config.eira.home.security.impermanence.enable;
+
+  hasXdg = (config.options.xdg.mimeApps.enable or null) != null;
+  xdgEnabled = hasXdg && config.xdg.mimeApps.enable;
 in {
   options.eira.home.programs.media = {
     enable = lib.mkEnableOption "Pictures and videos";
@@ -18,7 +24,7 @@ in {
       package = pkgs.mpv;
     };
 
-    xdg.mimeApps.defaultApplications = lib.mkIf (config.xdg.mimeApps.enable or false) {
+    xdg.mimeApps.defaultApplications = lib.mkIf xdgEnabled {
       "audio/*" = lib.mkDefault ["mpv.desktop"];
       "video/*" = lib.mkDefault ["mpv.desktop"];
       "image/*" = lib.mkDefault ["imv.desktop"];
@@ -29,7 +35,7 @@ in {
       package = pkgs.obs-studio;
     };
 
-    home.persistence."/persist" = lib.mkIf (config.eira.home.security.impermanence.enable or false) {
+    home.persistence."/persist" = lib.mkIf impermanenceEnabled {
       directories = [ ".config/obs-studio" ];
     };
   };

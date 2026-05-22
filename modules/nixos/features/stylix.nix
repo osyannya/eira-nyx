@@ -6,7 +6,7 @@ in {
   imports = [ inputs.stylix.nixosModules.stylix ];
 
   options.eira.system.features.stylix = {
-    enable = lib.mkEnableOption "System-wide Stylix theming engine";
+    enable = lib.mkEnableOption "Stylix module";
 
     defaultTheme = lib.mkOption {
       type = lib.types.str;

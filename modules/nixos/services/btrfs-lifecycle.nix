@@ -4,7 +4,7 @@ let
   cfg = config.eira.system.services.btrfs-lifecycle;
 in {
   options.eira.system.services.btrfs-lifecycle = {
-    enable = lib.mkEnableOption "Btrfs lifecycle engine (ephemeral root and persist snapshots)";
+    enable = lib.mkEnableOption "Btrfs lifecycle engine";
     
     rootDevice = lib.mkOption {
       type = lib.types.str;

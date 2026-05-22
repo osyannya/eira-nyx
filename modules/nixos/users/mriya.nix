@@ -2,13 +2,17 @@
 
 let
   cfg = config.eira.system.users.mriya;
-  sopsEnabled = config.eira.system.security.sops.enable or false;
-  globalHmEnabled = config.eira.system.features.home-manager.enable;
+
+  hasSops = config.options.eira.system.security.sops.enable or null != null;
+  sopsEnabled = hasSops && config.eira.system.security.sops.enable;
+
+  hasHm = config.options.eira.system.features.home-manager.enable or null != null;
+  globalHmEnabled = hasHm && config.eira.system.features.home-manager.enable;
 in {
   options.eira.system.users.mriya = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = true; # Enabled by default across the machines
+      default = true;
       description = "Enable the primary mriya user account";
     };
     
@@ -16,7 +20,7 @@ in {
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = "Inject Home Manager dotfiles if the global engine is enabled";
+        description = "Use Home Manager dotfiles if the global engine is enabled";
       };
     };
   };
@@ -28,11 +32,9 @@ in {
       home = "/home/mriya";
       extraGroups = [ "wheel" ];
       
-      # Map the password file if SOPS is actually enabled globally
       hashedPasswordFile = lib.mkIf sopsEnabled config.sops.secrets."passwords/mriya".path;
     };
 
-    # Home Manager Intersection Logic
     home-manager.users.mriya = lib.mkIf (globalHmEnabled && cfg.home-manager.enable) (
       import ../../../profiles/users/mixin.nix 
     );

@@ -48,9 +48,7 @@
         linux-vm.enable = true;
         scan-wifi.enable = true;
         stealth-vm.enable = true;
-        swaylock-wrapper.enable = true;
         temporary-wifi.enable = true;
-        wallpaper-switch.enable = true;
         windows-vm.enable = true;
       };
     };

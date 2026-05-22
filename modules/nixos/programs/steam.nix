@@ -11,5 +11,3 @@ in {
     programs.steam.enable = true;
   };
 }
-
-# Also add check for home manager and impermanence

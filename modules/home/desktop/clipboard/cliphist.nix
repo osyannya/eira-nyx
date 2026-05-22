@@ -17,7 +17,7 @@ in {
         "-max-dedupe-search" "10"
         "-max-items" "500"
       ];
-      systemdTargets = [ "sway-session.target" ];
+      systemdTargets = [ "graphical-session.target" ];
     };
   };
 }

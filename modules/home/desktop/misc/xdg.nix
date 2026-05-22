@@ -1,10 +1,12 @@
 { config, lib, ... }:
 
 let
-  cfg = config.eira.home.desktop.xdg;
-  persistEnabled = config.eira.home.security.impermanence.enable or false;
+  cfg = config.eira.home.desktop.misc.xdg;
+
+  hasImpermanence = config.options.eira.home.security.impermanence.enable or null != null;
+  impermanenceEnabled = hasImpermanence && config.eira.home.security.impermanence.enable;
 in {
-  options.eira.home.desktop.xdg = {
+  options.eira.home.desktop.misc.xdg = {
     enable = lib.mkEnableOption "XDG settings";
   };
 
@@ -22,7 +24,7 @@ in {
       };
     };
 
-    home.persistence."/persist" = lib.mkIf (persistEnabled && config.xdg.userDirs.enable) {
+    home.persistence."/persist" = lib.mkIf impermanenceEnabled {
       directories = [
         "Desktop"
         "Documents"

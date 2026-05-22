@@ -4,7 +4,7 @@ let
   cfg = config.eira.system.video.intel;
 in {
   options.eira.system.video.intel = {
-    enable = lib.mkEnableOption "Intel graphics, media drivers, and VAAPI";
+    enable = lib.mkEnableOption "Intel graphics, media drivers and VAAPI";
   };
 
   config = lib.mkIf cfg.enable {

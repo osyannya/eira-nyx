@@ -2,6 +2,10 @@
 
 let
   cfg = config.eira.system.network.dns;
+
+  
+  hasFirewall = (config.options.eira.system.network.firewall.enable or null) != null;
+  firewallEnabled = hasFirewall && config.eira.system.network.firewall.enable;
 in {
   options.eira.system.network.dns = {
     enable = lib.mkEnableOption "Secure DNS resolution and stub-listener caching";
@@ -24,7 +28,7 @@ in {
     networking.nameservers = lib.mkForce [ ];
 
     # Dynamic firewall rules for DNS
-    networking.nftables.ruleset = lib.mkIf (config.networking.nftables.enable or false) ''
+    networking.nftables.ruleset = lib.mkIf firewallEnabled ''
       table inet filter {
         set allowed_dns {
           type ipv4_addr; flags interval

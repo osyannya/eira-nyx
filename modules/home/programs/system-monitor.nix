@@ -2,6 +2,9 @@
 
 let 
   cfg = config.eira.home.programs.systemMonitor;
+
+  hasWireplumber = (osConfig.options.services.pipewire.wireplumber.enable or null) != null;
+  wireplumberEnabled = hasWireplumber && osConfig.services.pipewire.wireplumber.enable;
 in {
   options.eira.home.programs.systemMonitor = {
     enable = lib.mkEnableOption "System monitoring tools";

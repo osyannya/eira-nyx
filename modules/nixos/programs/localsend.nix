@@ -13,7 +13,7 @@ in {
       package = pkgs.localsend;
     };
 
-    # Dynamic Firewall Composability 
+    # Dynamic firewall 
     networking.nftables.ruleset = lib.mkIf (config.networking.nftables.enable or false) ''
       table inet filter {
         chain input {
@@ -29,5 +29,3 @@ in {
     '';
   };
 }
-
-# add condition if home-manager is enabled, when impermanence is enabled system wide and in home, add home paths to persist

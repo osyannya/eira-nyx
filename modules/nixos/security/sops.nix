@@ -8,7 +8,7 @@ in {
   ];
 
   options.eira.system.security.sops = {
-    enable = lib.mkEnableOption "SOPS-Nix for secrets management";
+    enable = lib.mkEnableOption "SOPS-Nix module";
 
     defaultSecretFile = lib.mkOption {
       type = lib.types.path;

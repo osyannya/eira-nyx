@@ -2,7 +2,9 @@
 
 let
   cfg = config.eira.system.users.root;
-  sopsEnabled = config.eira.system.security.sops.enable or false;
+
+  hasSops = config.options.eira.system.security.sops.enable or null != null;
+  sopsEnabled = hasSops && config.eira.system.security.sops.enable;
 in {
   options.eira.system.users.root = {
     enable = lib.mkEnableOption "Declarative SOPS password mapping for the root account";

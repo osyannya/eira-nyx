@@ -8,7 +8,7 @@ in {
   ];
 
   options.eira.system.features.home-manager = {
-    enable = lib.mkEnableOption "Home Manager";
+    enable = lib.mkEnableOption "Home Manager module";
   };
 
   config = lib.mkIf cfg.enable {

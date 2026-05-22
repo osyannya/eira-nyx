@@ -189,10 +189,10 @@ Currently under development
 
 All operational procedures are fully automated and documented in the `docs/` directory:
 
-**[Bootstrap and installation](/nix/store/3smnlidzyv07jwygr1llxgn9ypn5gjfr-joplin-desktop-3.5.12/share/joplin-desktop/resources/app.asar/%22docs/INSTALL.md%22 "%22docs/INSTALL.md%22"):** How to intall the system on bare metal or Linux machine.  
-**[Fleet orchestration](/nix/store/3smnlidzyv07jwygr1llxgn9ypn5gjfr-joplin-desktop-3.5.12/share/joplin-desktop/resources/app.asar/%22docs/DEPLOY.md%22 "%22docs/DEPLOY.md%22"):** How to push updates across all the machines.  
-**[Disaster recovery](/nix/store/3smnlidzyv07jwygr1llxgn9ypn5gjfr-joplin-desktop-3.5.12/share/joplin-desktop/resources/app.asar/%22docs/RECOVERY.md%22 "%22docs/RECOVERY.md%22"):** Steps for host restoration after an incident.  
-**[Secret Management](/nix/store/3smnlidzyv07jwygr1llxgn9ypn5gjfr-joplin-desktop-3.5.12/share/joplin-desktop/resources/app.asar/%22docs/SECRETS.md%22 "%22docs/SECRETS.md%22"):** How to re-key the repository and add new admins.
+**[Bootstrap and installation](docs/INSTALL.md):** How to intall the system on bare metal or Linux machine.  
+**[Fleet orchestration](docs/DEPLOY.md):** How to push updates across all the machines.  
+**[Disaster recovery](docs/RECOVERY.md):** How host is restored after an incident.  
+**[Secret Management](docs/SECRETS.md):** How to re-key the repository and add new admins.
 
 ## 7. Deep dives and engineering rationale
 

@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.eira.system.desktop.displaymanager.greetd;
+  cfg = config.eira.system.desktop.greeter.greetd;
 in {
-  options.eira.system.desktop.displaymanager.greetd = {
+  options.eira.system.desktop.greeter.greetd = {
     enable = lib.mkEnableOption "Greetd display manager with Tuigreet";
 
     defaultSession = lib.mkOption {

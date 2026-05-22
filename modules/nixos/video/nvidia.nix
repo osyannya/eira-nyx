@@ -4,7 +4,7 @@ let
   cfg = config.eira.system.video.nvidia;
 in {
   options.eira.system.video.nvidia = {
-    enable = lib.mkEnableOption "Nvidia proprietary drivers, DRM modesetting, and GLX overrides";
+    enable = lib.mkEnableOption "Nvidia proprietary drivers, DRM modesetting and GLX overrides";
   };
 
   config = lib.mkIf cfg.enable {
@@ -36,4 +36,4 @@ in {
   };
 }
 
-# Remove variables in favor of multi GPU
+# Variables are removed in favor of multi GPU

@@ -18,5 +18,3 @@ in {
     home.packages = [ screenshot ];
   };
 }
-
-

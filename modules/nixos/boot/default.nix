@@ -2,8 +2,10 @@
 
 let
   cfg = config.eira.system.boot;
+
+  hasImpermanence = (config.options.eira.system.security.impermanence.enable or null) != null;
+  impermanenceEnabled = hasImpermanence && config.eira.system.security.impermanence.enable;
 in {
-  # The boot
   options.eira.system.boot = {
     loader = {
       systemdBoot.enable = lib.mkEnableOption "Standard systemd-boot EFI bootloader";
@@ -12,8 +14,17 @@ in {
     earlySystemd.enable = lib.mkEnableOption "Systemd in initrd";
   };
 
-  # Capabilities
   config = lib.mkMerge [
+    # Explicit Guardrail: Assert that both bootloaders cannot be active simultaneously
+    {
+      assertions = [
+        {
+          assertion = !(cfg.loader.systemdBoot.enable && cfg.loader.secureBoot.enable);
+          message = "eira.system.boot.loader: systemdBoot and secureBoot are mutually exclusive configurations.";
+        }
+      ];
+    }
+
     # Standard Bootloader
     (lib.mkIf cfg.loader.systemdBoot.enable {
       boot.loader.systemd-boot.enable = true;
@@ -36,12 +47,12 @@ in {
         enable = true;
         # autoGenerateKeys.enable = true;
         # autoEnrollKeys.enable = true;
-        pkiBundle = if (config.eira.system.security.impermanence.enable or false) then "/persist/var/lib/sbctl" else "/var/lib/sbctl";
+        pkiBundle = if impermanenceEnabled then "/persist/var/lib/sbctl" else "/var/lib/sbctl";
         configurationLimit = 12;
       };
 
       # Impermanence mapping for secure boot keys
-      environment.persistence."/persist" = lib.mkIf (config.eira.system.security.impermanence.enable or false) {
+      environment.persistence."/persist" = lib.mkIf impermanenceEnabled {
         directories = [ "/var/lib/sbctl" ];
       };
     })
@@ -50,7 +61,7 @@ in {
     (lib.mkIf cfg.earlySystemd.enable {
       boot.initrd = { 
         systemd.enable = true;
-        kernelModules = [ "tpm_tis" ];
+        kernelModules = [ "tpm_tis" ]; # Needed for TPM autounlock
       };     
     })
   ];

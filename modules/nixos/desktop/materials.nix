@@ -4,7 +4,7 @@ let
   cfg = config.eira.system.desktop.materials;
 in {
   options.eira.system.desktop.materials = {
-    enable = lib.mkEnableOption "System-wide icons and cursors";
+    enable = lib.mkEnableOption "System-wide materials";
   };
 
   config = lib.mkIf cfg.enable {

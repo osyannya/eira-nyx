@@ -8,7 +8,7 @@ in {
   ];
 
   options.eira.system.security.impermanence = {
-    enable = lib.mkEnableOption "Impermanence";
+    enable = lib.mkEnableOption "Impermanence module";
 
     extraDirectories = lib.mkOption {
       type = lib.types.listOf lib.types.str;

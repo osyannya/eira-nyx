@@ -17,8 +17,8 @@ in {
       ];
     };
 
-    services.gvfs.enable = true;
-    services.tumbler.enable = true;
-    services.udisks2.enable = true;
+    services.gvfs.enable = true; # Recycle bin
+    services.tumbler.enable = true; # File preview
+    services.udisks2.enable = true; # Auto mounting 
   };
 }

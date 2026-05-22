@@ -7,7 +7,7 @@ in {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Overlays";
+      description = "Overlays module";
     };
   };
 
